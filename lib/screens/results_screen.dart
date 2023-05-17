@@ -9,7 +9,7 @@ class ResultsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final questions = ref.watch(questionsProvider);
-    final selectedOption = ref.watch(selectedOptionProvider.notifier).state;
+    final selectedOption = ref.watch(selectedAnswerProvider.notifier).state;
 
     return Scaffold(
       appBar: AppBar(
@@ -21,7 +21,7 @@ class ResultsScreen extends ConsumerWidget {
           return ListTile(
             title: Text(questions[index]),
             subtitle:
-                Text(ref.read(optionsProvider)[index][selectedOption[index]]),
+                Text(ref.read(answersProvider)[index][selectedOption[index]]),
           );
         },
       ),

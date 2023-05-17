@@ -10,9 +10,9 @@ class QuestionsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final questions = ref.watch(questionsProvider);
-    final options = ref.watch(optionsProvider);
+    final options = ref.watch(answersProvider);
     final currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
-    final selectedOption = ref.watch(selectedOptionProvider);
+    final selectedOption = ref.watch(selectedAnswerProvider);
 
     final isAnswerSelected = selectedOption[currentQuestionIndex] != -1;
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
@@ -51,7 +51,7 @@ class QuestionsScreen extends ConsumerWidget {
                   value: entry.key,
                   groupValue: selectedOption[currentQuestionIndex],
                   onChanged: (value) {
-                    ref.read(selectedOptionProvider.notifier).state =
+                    ref.read(selectedAnswerProvider.notifier).state =
                         List.from(selectedOption)
                           ..[currentQuestionIndex] = value as int;
                   },
