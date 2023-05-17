@@ -10,11 +10,11 @@ class QuestionsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final questions = ref.watch(questionsProvider);
-    final options = ref.watch(optionsProvider);
+    final answers = ref.watch(answersProvider);
     final currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
-    final selectedOption = ref.watch(selectedOptionProvider);
+    final selectedAnswer = ref.watch(selectedAnswerProvider);
 
-    final isAnswerSelected = selectedOption[currentQuestionIndex] != -1;
+    final isAnswerSelected = selectedAnswer[currentQuestionIndex] != -1;
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
 
     return Scaffold(
@@ -42,17 +42,17 @@ class QuestionsScreen extends ConsumerWidget {
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
-          ...options[currentQuestionIndex]
+          ...answers[currentQuestionIndex]
               .asMap()
               .entries
               .map(
                 (entry) => RadioListTile(
                   title: Text(entry.value),
                   value: entry.key,
-                  groupValue: selectedOption[currentQuestionIndex],
+                  groupValue: selectedAnswer[currentQuestionIndex],
                   onChanged: (value) {
-                    ref.read(selectedOptionProvider.notifier).state =
-                        List.from(selectedOption)
+                    ref.read(selectedAnswerProvider.notifier).state =
+                        List.from(selectedAnswer)
                           ..[currentQuestionIndex] = value as int;
                   },
                 ),

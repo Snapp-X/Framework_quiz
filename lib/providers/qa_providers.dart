@@ -6,7 +6,7 @@ final questionsProvider = Provider<List<String>>((ref) => [
       'Who is your target audience for the App?',
     ]);
 
-final optionsProvider = Provider<List<List<String>>>((ref) => [
+final answersProvider = Provider<List<List<String>>>((ref) => [
       [
         'Social Media App',
         'E-Commerce App',
@@ -30,7 +30,7 @@ final optionsProvider = Provider<List<List<String>>>((ref) => [
 
 final currentQuestionIndexProvider = StateProvider<int>((ref) => 0);
 
-final selectedOptionProvider = StateProvider<List<int>>((ref) {
+final selectedAnswerProvider = StateProvider<List<int>>((ref) {
   final questions = ref.watch(questionsProvider);
   return List<int>.filled(questions.length, -1);
 });
