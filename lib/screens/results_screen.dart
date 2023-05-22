@@ -15,15 +15,20 @@ class ResultsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Results'),
       ),
-      body: ListView.builder(
-        itemCount: questions.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(questions[index]),
-            subtitle:
-                Text(ref.read(answersProvider)[index][selectedAnswer[index]]),
-          );
-        },
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          child: ListView.builder(
+            itemCount: questions.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(questions[index]),
+                subtitle: Text(
+                    ref.read(answersProvider)[index][selectedAnswer[index]]),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
