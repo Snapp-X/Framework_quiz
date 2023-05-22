@@ -98,17 +98,22 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
         width: MediaQuery.of(context).size.width * 0.6,
         child: Stack(
           children: <Widget>[
-            SizedBox.expand(
+            Align(
+              alignment: Alignment.center,
               child: LinearProgressIndicator(
+                minHeight: 4,
                 value: currentQuestionIndex / questions.length,
                 backgroundColor: Colors.greenAccent,
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
               ),
             ),
             Align(
-                child: Text(currentQuestionIndex.toString() +
-                    "/" +
-                    questions.length.toString()),
+                child: Text(
+                  currentQuestionIndex.toString() +
+                      "/" +
+                      questions.length.toString(),
+                  style: TextStyle(backgroundColor: Colors.blue),
+                ),
                 alignment: Alignment.center),
           ],
         ),
