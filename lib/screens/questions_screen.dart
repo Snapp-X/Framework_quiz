@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../providers/qa_provider.dart';
 
@@ -14,17 +15,10 @@ class QuestionsScreen extends ConsumerStatefulWidget {
 }
 
 class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
-  bool isDialogShown = false;
-
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!isDialogShown) {
-        showDialogOnAppStart();
-        isDialogShown = true;
-      }
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => checkFirstRun(context));
   }
 
   @override
@@ -140,18 +134,29 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
       builder: (context) => BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: AlertDialog(
-          title: Text('Welcome'),
-          content: Text('This is a dialog shown on app start.'),
+          title: Text('Which technology is best for your app?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('OK'),
+              child: Text('Find it out'),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future checkFirstRun(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
+
+    if (isFirstRun) {
+      showDialogOnAppStart();
+      prefs.setBool('isFirstRun', false);
+    } else {
+      return null;
+    }
   }
 }
