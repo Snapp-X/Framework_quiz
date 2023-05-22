@@ -18,66 +18,98 @@ class QuestionsScreen extends ConsumerWidget {
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Questionnaire'),
-        leading: currentQuestionIndex > 0
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  if (currentQuestionIndex > 0) {
-                    ref.read(currentQuestionIndexProvider.notifier).state--;
-                    context.go('/');
-                  }
-                },
-              )
-            : null,
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              questions[currentQuestionIndex],
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-          ...answers[currentQuestionIndex]
-              .asMap()
-              .entries
-              .map(
-                (entry) => RadioListTile(
-                  title: Text(entry.value),
-                  value: entry.key,
-                  groupValue: selectedAnswer[currentQuestionIndex],
-                  onChanged: (value) {
-                    ref.read(selectedAnswerProvider.notifier).state =
-                        List.from(selectedAnswer)
-                          ..[currentQuestionIndex] = value as int;
-                  },
+      appBar: buildCustomAppBar(context, currentQuestionIndex, questions, ref),
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  questions[currentQuestionIndex],
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-              )
-              .toList(),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: isAnswerSelected
-                  ? () {
-                      if (isLastQuestion) {
-                        context.go('/results');
-                      } else {
-                        ref.read(currentQuestionIndexProvider.notifier).state++;
-                      }
-                    }
-                  : null,
-              child: Text(
-                isLastQuestion ? 'Submit' : 'Next Question',
+              ),
+              ...answers[currentQuestionIndex]
+                  .asMap()
+                  .entries
+                  .map(
+                    (entry) => RadioListTile(
+                      title: Text(entry.value),
+                      value: entry.key,
+                      groupValue: selectedAnswer[currentQuestionIndex],
+                      onChanged: (value) {
+                        ref.read(selectedAnswerProvider.notifier).state =
+                            List.from(selectedAnswer)
+                              ..[currentQuestionIndex] = value as int;
+                      },
+                    ),
+                  )
+                  .toList(),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: isAnswerSelected
+                      ? () {
+                          if (isLastQuestion) {
+                            context.go('/results');
+                          } else {
+                            ref
+                                .read(currentQuestionIndexProvider.notifier)
+                                .state++;
+                          }
+                        }
+                      : null,
+                  child: Text(
+                    isLastQuestion ? 'Submit' : 'Next Question',
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  AppBar buildCustomAppBar(BuildContext context, int currentQuestionIndex,
+      List<String> questions, WidgetRef ref) {
+    return AppBar(
+      title: SizedBox(
+        height: 30,
+        width: MediaQuery.of(context).size.width * 0.6,
+        child: Stack(
+          children: <Widget>[
+            SizedBox.expand(
+              child: LinearProgressIndicator(
+                value: currentQuestionIndex / questions.length,
+                backgroundColor: Colors.greenAccent,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
               ),
             ),
-          ),
-        ],
+            Align(
+                child: Text(currentQuestionIndex.toString() +
+                    "/" +
+                    questions.length.toString()),
+                alignment: Alignment.center),
+          ],
+        ),
       ),
+      leading: currentQuestionIndex > 0
+          ? IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                if (currentQuestionIndex > 0) {
+                  ref.read(currentQuestionIndexProvider.notifier).state--;
+                  context.go('/');
+                }
+              },
+            )
+          : null,
     );
   }
 }
