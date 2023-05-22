@@ -1,14 +1,34 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../providers/qa_providers.dart';
+import '../providers/qa_provider.dart';
 
-class QuestionsScreen extends ConsumerWidget {
+class QuestionsScreen extends ConsumerStatefulWidget {
   const QuestionsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<QuestionsScreen> createState() => _QuestionsScreenState();
+}
+
+class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
+  bool isDialogShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!isDialogShown) {
+        showDialogOnAppStart();
+        isDialogShown = true;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final questions = ref.watch(questionsProvider);
     final answers = ref.watch(answersProvider);
     final currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
@@ -110,6 +130,28 @@ class QuestionsScreen extends ConsumerWidget {
               },
             )
           : null,
+    );
+  }
+
+  void showDialogOnAppStart() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: AlertDialog(
+          title: Text('Welcome'),
+          content: Text('This is a dialog shown on app start.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
