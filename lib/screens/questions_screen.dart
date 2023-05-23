@@ -30,6 +30,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
 
     final isAnswerSelected = selectedAnswer[currentQuestionIndex] != -1;
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: buildCustomAppBar(context, currentQuestionIndex, questions, ref),
@@ -205,7 +206,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
       barrierDismissible: false,
       context: context,
       builder: (_) => BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: new AlertDialog(
           insetPadding: EdgeInsets.zero,
           contentPadding: EdgeInsets.zero,
@@ -229,7 +230,11 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       child: Text(
                         'Which technology is\nbest for your app?',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 60, color: Colors.white),
+                        style: TextStyle(
+                            fontFamily: 'Clash Grotesk Display',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 60,
+                            color: Colors.white),
                       ),
                     ),
                     SizedBox(
@@ -287,6 +292,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   Future checkFirstRun(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
+    showDialogOnAppStart();
     if (isFirstRun) {
       showDialogOnAppStart();
       prefs.setBool('isFirstRun', false);
