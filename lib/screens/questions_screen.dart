@@ -31,6 +31,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final isAnswerSelected = selectedAnswer[currentQuestionIndex] != -1;
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: buildCustomAppBar(context, currentQuestionIndex, questions, ref),
       body: Center(
         child: Container(
@@ -43,7 +44,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                     EdgeInsets.only(top: 40, bottom: 40, left: 40, right: 40),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.black,
+                    color: Colors.white.withOpacity(0.5),
                     width: 3.0,
                   ),
                   borderRadius: BorderRadius.circular(60),
@@ -55,66 +56,95 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       child: Text(
                         questions[currentQuestionIndex],
                         style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
                     ),
                     ListView.separated(
                       shrinkWrap: true,
                       itemCount: answers[currentQuestionIndex].length,
-                      separatorBuilder: (context, index) => Divider(),
+                      separatorBuilder: (context, index) => Divider(
+                        color: Colors.white.withOpacity(0.5),
+                      ),
                       itemBuilder: (context, index) {
                         final answer = answers[currentQuestionIndex][index];
 
-                        return RadioListTile(
-                          title: Text(answer),
-                          controlAffinity: ListTileControlAffinity.trailing,
-                          value: index,
-                          groupValue: selectedAnswer[currentQuestionIndex],
-                          onChanged: (value) {
-                            ref.read(selectedAnswerProvider.notifier).state =
-                                List.from(selectedAnswer)
-                                  ..[currentQuestionIndex] = value as int;
-                          },
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            unselectedWidgetColor:
+                                Colors.white.withOpacity(0.5),
+                          ),
+                          child: RadioListTile(
+                            activeColor: Color(0xFF78FCB0),
+                            title: Text(answer,
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(0.5))),
+                            controlAffinity: ListTileControlAffinity.trailing,
+                            value: index,
+                            groupValue: selectedAnswer[currentQuestionIndex],
+                            onChanged: (value) {
+                              ref.read(selectedAnswerProvider.notifier).state =
+                                  List.from(selectedAnswer)
+                                    ..[currentQuestionIndex] = value as int;
+                            },
+                          ),
                         );
                       },
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 60,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.black),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
-                        ))),
-                    onPressed: isAnswerSelected
-                        ? () {
-                            if (isLastQuestion) {
-                              context.go('/results');
-                            } else {
-                              ref
-                                  .read(currentQuestionIndexProvider.notifier)
-                                  .state++;
-                            }
-                          }
-                        : null,
-                    child: Text(
-                      isLastQuestion ? 'See result' : 'Next Question',
-                    ),
-                  ),
-                ),
-              ),
+              buildBottomButton(isAnswerSelected, isLastQuestion, context),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding buildBottomButton(
+      bool isAnswerSelected, bool isLastQuestion, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 40),
+      child: SizedBox(
+        width: double.infinity,
+        height: 60,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+                if (states.contains(MaterialState.disabled)) {
+                  return Colors.white.withOpacity(0.5);
+                }
+                return Color(0xFF141414);
+              },
+            ),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+                if (states.contains(MaterialState.disabled)) {
+                  return Color(0xFF36343B);
+                }
+                return Color(0xFF78FCB0);
+              },
+            ),
+          ),
+          onPressed: isAnswerSelected
+              ? () {
+                  if (isLastQuestion) {
+                    context.go('/results');
+                  } else {
+                    ref.read(currentQuestionIndexProvider.notifier).state++;
+                  }
+                }
+              : null,
+          child: Text(
+            isLastQuestion ? 'See result' : 'Next Question',
           ),
         ),
       ),
@@ -124,6 +154,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   AppBar buildCustomAppBar(BuildContext context, int currentQuestionIndex,
       List<String> questions, WidgetRef ref) {
     return AppBar(
+      backgroundColor: Colors.black,
       title: SizedBox(
         height: 30,
         width: MediaQuery.of(context).size.width * 0.4,
@@ -134,8 +165,8 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
               child: LinearProgressIndicator(
                 minHeight: 4,
                 value: currentQuestionIndex / questions.length,
-                backgroundColor: Colors.greenAccent,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                backgroundColor: Color(0xFF36343B),
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
               ),
             ),
             Align(
@@ -143,7 +174,10 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                   currentQuestionIndex.toString() +
                       "/" +
                       questions.length.toString(),
-                  style: TextStyle(backgroundColor: Colors.blue),
+                  style: TextStyle(
+                      backgroundColor: Colors.black,
+                      color: Colors.white.withOpacity(0.5),
+                      fontSize: 16),
                 ),
                 alignment: Alignment.center),
           ],
@@ -151,7 +185,10 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
       ),
       leading: currentQuestionIndex > 0
           ? IconButton(
-              icon: const Icon(Icons.arrow_back),
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Color(0xFF78FCB0),
+              ),
               onPressed: () {
                 if (currentQuestionIndex > 0) {
                   ref.read(currentQuestionIndexProvider.notifier).state--;
@@ -187,18 +224,56 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Which technology is\nbest for your app?',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 60),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 100),
+                      child: Text(
+                        'Which technology is\nbest for your app?',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 60, color: Colors.white),
+                      ),
                     ),
-                    SizedBox(height: 20),
-                    TextButton(
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: 60,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.disabled)) {
+                                return Colors.white.withOpacity(0.5);
+                              }
+                              return Color(0xFF141414);
+                            },
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.disabled)) {
+                                return Color(0xFF36343B);
+                              }
+                              return Color(0xFF78FCB0);
+                            },
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Find it out'),
+                      ),
+                    ),
+                    /*TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
                       child: Text('Find it out'),
-                    ),
+                    ),*/
                   ],
                 ),
               );
@@ -212,6 +287,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   Future checkFirstRun(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
+    showDialogOnAppStart();
     if (isFirstRun) {
       showDialogOnAppStart();
       prefs.setBool('isFirstRun', false);
