@@ -109,7 +109,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                           }
                         : null,
                     child: Text(
-                      isLastQuestion ? 'Submit' : 'Next Question',
+                      isLastQuestion ? 'See result' : 'Next Question',
                     ),
                   ),
                 ),
@@ -212,7 +212,6 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   Future checkFirstRun(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
-    showDialogOnAppStart();
     if (isFirstRun) {
       showDialogOnAppStart();
       prefs.setBool('isFirstRun', false);
