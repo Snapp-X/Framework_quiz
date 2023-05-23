@@ -14,11 +14,16 @@ class ResultsScreen extends ConsumerWidget {
     final selectedAnswer = ref.watch(selectedAnswerProvider.notifier).state;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.close),
+            icon: const Icon(
+              Icons.close,
+              color: Color(0xFF78FCB0),
+            ),
             onPressed: () {
               ref.read(currentQuestionIndexProvider.notifier).state = 0;
               ref.read(selectedAnswerProvider.notifier).state =
@@ -34,16 +39,15 @@ class ResultsScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(top: 100),
                 child: Text(
                   'Flutter it is!',
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                      fontSize: 60,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
-              SizedBox(
-                  height:
-                      16), // Add some spacing between the text and progress bars
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -55,9 +59,17 @@ class ResultsScreen extends ConsumerWidget {
                         final entries = results.entries.toList();
                         return ListTile(
                           title: LinearProgressIndicator(
+                            minHeight: 30,
+                            backgroundColor: Color(0xFF36343B),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xFF78FCB0)),
                             value: entries[index].value,
                           ),
-                          subtitle: Text(entries[index].key),
+                          subtitle: Text(
+                            entries[index].key,
+                            style:
+                                TextStyle(color: Colors.white.withOpacity(0.5)),
+                          ),
                         );
                       },
                     ),

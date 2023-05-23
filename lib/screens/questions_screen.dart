@@ -287,7 +287,6 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   Future checkFirstRun(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
-    showDialogOnAppStart();
     if (isFirstRun) {
       showDialogOnAppStart();
       prefs.setBool('isFirstRun', false);
