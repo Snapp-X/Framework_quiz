@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../providers/qa_provider.dart';
 import '../providers/results_provider.dart';
@@ -39,7 +40,7 @@ class ResultsScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 100),
+                padding: const EdgeInsets.only(top: 80, bottom: 60),
                 child: Text(
                   'Flutter it is!',
                   style: const TextStyle(
@@ -58,17 +59,26 @@ class ResultsScreen extends ConsumerWidget {
                       itemBuilder: (context, index) {
                         final entries = results.entries.toList();
                         return ListTile(
-                          title: LinearProgressIndicator(
-                            minHeight: 30,
-                            backgroundColor: Color(0xFF36343B),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                Color(0xFF78FCB0)),
-                            value: entries[index].value,
+                          title: Padding(
+                            padding: EdgeInsets.only(bottom: 6),
+                            child: new LinearPercentIndicator(
+                              backgroundColor: Color(0xFF36343B),
+                              animation: true,
+                              lineHeight: 30,
+                              animationDuration: 2000,
+                              percent: entries[index].value,
+                              barRadius: const Radius.circular(16),
+                              progressColor: Color(0xFF78FCB0),
+                            ),
                           ),
-                          subtitle: Text(
-                            entries[index].key,
-                            style:
-                                TextStyle(color: Colors.white.withOpacity(0.5)),
+                          subtitle: Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: 10, left: 20),
+                            child: Text(
+                              entries[index].key,
+                              style: TextStyle(
+                                  color: Colors.white.withOpacity(0.5)),
+                            ),
                           ),
                         );
                       },
