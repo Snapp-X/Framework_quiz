@@ -97,3 +97,6 @@ flutter:
       - family: Clash Grotesk Display
         fonts:
           - asset: fonts/ClashDisplay-Regular.ttf
+      - family: Switzer
+        fonts:
+          - asset: fonts/Switzer-Regular.ttf

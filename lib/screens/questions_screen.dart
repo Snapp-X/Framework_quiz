@@ -56,9 +56,10 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       padding: const EdgeInsets.only(bottom: 40),
                       child: Text(
                         questions[currentQuestionIndex],
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        style: TextStyle(
+                            fontFamily: 'Clash Grotesk Display',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20,
                             color: Colors.white),
                       ),
                     ),
@@ -80,6 +81,9 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                             activeColor: Color(0xFF78FCB0),
                             title: Text(answer,
                                 style: TextStyle(
+                                    fontFamily: 'Clash Grotesk Display',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18,
                                     color: Colors.white.withOpacity(0.5))),
                             controlAffinity: ListTileControlAffinity.trailing,
                             value: index,
