@@ -67,6 +67,10 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: Color(0xff78FCB0), // Background color
+                  ),
                   onPressed: isAnswerSelected
                       ? () {
                           if (isLastQuestion) {
@@ -136,18 +140,43 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (context) => BackdropFilter(
+      builder: (_) => BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: AlertDialog(
-          title: Text('Which technology is best for your app?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Find it out'),
-            ),
-          ],
+        child: new AlertDialog(
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.grey.withOpacity(0.2),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(100))),
+          content: Builder(
+            builder: (context) {
+              var height = MediaQuery.of(context).size.height;
+              var width = MediaQuery.of(context).size.width;
+
+              return Container(
+                height: height - 200,
+                width: width - 100,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Which technology is\nbest for your app?',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 60),
+                    ),
+                    SizedBox(height: 20),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Find it out'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -156,7 +185,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   Future checkFirstRun(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
-
+    showDialogOnAppStart();
     if (isFirstRun) {
       showDialogOnAppStart();
       prefs.setBool('isFirstRun', false);
