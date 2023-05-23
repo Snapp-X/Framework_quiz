@@ -43,9 +43,10 @@ class ResultsScreen extends ConsumerWidget {
                 padding: const EdgeInsets.only(top: 80, bottom: 60),
                 child: Text(
                   'Flutter it is!',
-                  style: const TextStyle(
+                  style: TextStyle(
+                      fontFamily: 'Clash Grotesk Display',
+                      fontWeight: FontWeight.w500,
                       fontSize: 60,
-                      fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
               ),
@@ -77,6 +78,9 @@ class ResultsScreen extends ConsumerWidget {
                             child: Text(
                               entries[index].key,
                               style: TextStyle(
+                                  fontFamily: 'Switzer',
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
                                   color: Colors.white.withOpacity(0.5)),
                             ),
                           ),

@@ -57,7 +57,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       child: Text(
                         questions[currentQuestionIndex],
                         style: TextStyle(
-                            fontFamily: 'Clash Grotesk Display',
+                            fontFamily: 'Switzer',
                             fontWeight: FontWeight.w500,
                             fontSize: 20,
                             color: Colors.white),
@@ -81,9 +81,9 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                             activeColor: Color(0xFF78FCB0),
                             title: Text(answer,
                                 style: TextStyle(
-                                    fontFamily: 'Clash Grotesk Display',
+                                    fontFamily: 'Switzer',
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     color: Colors.white.withOpacity(0.5))),
                             controlAffinity: ListTileControlAffinity.trailing,
                             value: index,
@@ -150,6 +150,10 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
               : null,
           child: Text(
             isLastQuestion ? 'See result' : 'Next Question',
+            style: TextStyle(
+                fontFamily: 'SF Pro Text',
+                fontWeight: FontWeight.w600,
+                fontSize: 18),
           ),
         ),
       ),
@@ -181,8 +185,10 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       questions.length.toString(),
                   style: TextStyle(
                       backgroundColor: Colors.black,
-                      color: Colors.white.withOpacity(0.5),
-                      fontSize: 16),
+                      fontFamily: 'Switzer',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 20,
+                      color: Colors.white.withOpacity(0.5)),
                 ),
                 alignment: Alignment.center),
           ],
@@ -274,15 +280,14 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('Find it out'),
+                        child: Text('Find it out',
+                            style: TextStyle(
+                                fontFamily: 'SF Pro Text',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                                color: Colors.black)),
                       ),
                     ),
-                    /*TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('Find it out'),
-                    ),*/
                   ],
                 ),
               );

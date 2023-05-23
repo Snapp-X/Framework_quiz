@@ -100,3 +100,6 @@ flutter:
       - family: Switzer
         fonts:
           - asset: fonts/Switzer-Regular.ttf
+      - family: SF Pro Text
+        fonts:
+          - asset: fonts/SFProText-Regular.ttf
