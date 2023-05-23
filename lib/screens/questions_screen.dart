@@ -30,8 +30,76 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
 
     final isAnswerSelected = selectedAnswer[currentQuestionIndex] != -1;
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
-
     return Scaffold(
+      appBar: buildCustomAppBar(context, currentQuestionIndex, questions, ref),
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 70.0),
+                child: Text(
+                  questions[currentQuestionIndex],
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              ListView.separated(
+                shrinkWrap:
+                    true, // Added this line to make the ListView fit its content
+                itemCount: answers[currentQuestionIndex].length,
+                separatorBuilder: (context, index) =>
+                    Divider(), // Add a divider between each RadioListTile
+                itemBuilder: (context, index) {
+                  final answer = answers[currentQuestionIndex][index];
+
+                  return RadioListTile(
+                    title: Text(answer),
+                    controlAffinity: ListTileControlAffinity.trailing,
+                    value: index,
+                    groupValue: selectedAnswer[currentQuestionIndex],
+                    onChanged: (value) {
+                      ref.read(selectedAnswerProvider.notifier).state =
+                          List.from(selectedAnswer)
+                            ..[currentQuestionIndex] = value as int;
+                    },
+                  );
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 80.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: Color(0xff78FCB0), // Background color
+                  ),
+                  onPressed: isAnswerSelected
+                      ? () {
+                          if (isLastQuestion) {
+                            context.go('/results');
+                          } else {
+                            ref
+                                .read(currentQuestionIndexProvider.notifier)
+                                .state++;
+                          }
+                        }
+                      : null,
+                  child: Text(
+                    isLastQuestion ? 'Submit' : 'Next Question',
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+/*    return Scaffold(
       appBar: buildCustomAppBar(context, currentQuestionIndex, questions, ref),
       body: Center(
         child: Container(
@@ -99,7 +167,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
           ),
         ),
       ),
-    );
+    );*/
   }
 
   AppBar buildCustomAppBar(BuildContext context, int currentQuestionIndex,
@@ -107,7 +175,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     return AppBar(
       title: SizedBox(
         height: 30,
-        width: MediaQuery.of(context).size.width * 0.6,
+        width: MediaQuery.of(context).size.width * 0.4,
         child: Stack(
           children: <Widget>[
             Align(
