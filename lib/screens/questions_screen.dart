@@ -44,26 +44,34 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                 child: Text(
                   questions[currentQuestionIndex],
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              ...answers[currentQuestionIndex]
-                  .asMap()
-                  .entries
-                  .map(
-                    (entry) => RadioListTile(
-                      title: Text(entry.value),
-                      value: entry.key,
+              const SizedBox(height: 16.0),
+              Expanded(
+                child: ListView.separated(
+                  itemCount: answers[currentQuestionIndex].length,
+                  separatorBuilder: (context, index) =>
+                      Divider(), // Add a divider between each RadioListTile
+                  itemBuilder: (context, index) {
+                    final answer = answers[currentQuestionIndex][index];
+
+                    return RadioListTile(
+                      title: Text(answer),
+                      controlAffinity: ListTileControlAffinity.trailing,
+                      value: index,
                       groupValue: selectedAnswer[currentQuestionIndex],
                       onChanged: (value) {
                         ref.read(selectedAnswerProvider.notifier).state =
                             List.from(selectedAnswer)
                               ..[currentQuestionIndex] = value as int;
                       },
-                    ),
-                  )
-                  .toList(),
-              const Spacer(),
+                    );
+                  },
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
