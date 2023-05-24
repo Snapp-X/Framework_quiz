@@ -143,6 +143,48 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
         width: MediaQuery.of(context).size.width * 0.4,
         child: Stack(
           children: <Widget>[
+            Center(
+              child: LinearProgressIndicator(
+                minHeight: 4,
+                value: (currentQuestionIndex + 1) / questions.length,
+                backgroundColor: Color(0xFF36343B),
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  '${currentQuestionIndex + 1}/${questions.length}',
+                  style: Theme.of(context).appBarTheme.titleTextStyle,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: Colors.black,
+    );
+    /* return AppBar(
+      leading: currentQuestionIndex > 0
+          ? IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Color(0xFF78FCB0),
+              ),
+              onPressed: () {
+                if (currentQuestionIndex > 0) {
+                  ref.read(currentQuestionIndexProvider.notifier).state--;
+                  context.go('/');
+                }
+              },
+            )
+          : null,
+      title: SizedBox(
+        height: 30,
+        width: MediaQuery.of(context).size.width * 0.4,
+        child: Stack(
+          children: <Widget>[
             Align(
               alignment: Alignment.center,
               child: LinearProgressIndicator(
@@ -154,16 +196,20 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
             ),
             Align(
               alignment: Alignment.center,
-              child: Text(
-                '${currentQuestionIndex + 1}/${questions.length}',
-                style: Theme.of(context).appBarTheme.titleTextStyle,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 10), // Adjust the padding here
+                child: Text(
+                  '${currentQuestionIndex}/${questions.length}',
+                  style: Theme.of(context).appBarTheme.titleTextStyle,
+                ),
               ),
             ),
           ],
         ),
       ),
       backgroundColor: Colors.black,
-    );
+    );*/
   }
 
   void showDialogOnAppStart(BuildContext context) {
