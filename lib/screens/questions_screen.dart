@@ -129,7 +129,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.grey.withOpacity(0.2),
+                color: Color(0xFF36343B).withOpacity(0.5),
               ),
               child: IconButton(
                 onPressed: () {

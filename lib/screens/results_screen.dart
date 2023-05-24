@@ -14,15 +14,16 @@ class ResultsScreen extends ConsumerWidget {
     final results = ref.watch(resultProvider);
     final selectedAnswer = ref.watch(selectedAnswerProvider.notifier).state;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
         actions: [
           Container(
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.grey.withOpacity(0.2),
+              color: Color(0xFF36343B).withOpacity(0.5),
             ),
             child: IconButton(
               onPressed: () {
@@ -45,12 +46,22 @@ class ResultsScreen extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 80, bottom: 60),
-                child: Text(
-                  'Flutter it is!',
-                  style: Theme.of(context).textTheme.displayLarge,
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 68),
+                  child: Container(
+                      height: 112,
+                      width: 308,
+                      child: ImageIcon(
+                        AssetImage('assets/flutter_dash.png'),
+                        color: Colors.transparent,
+                      )),
                 ),
+              ),
+              Text(
+                'Flutter it is!',
+                style: Theme.of(context).textTheme.displayLarge,
               ),
               Expanded(
                 child: Padding(
