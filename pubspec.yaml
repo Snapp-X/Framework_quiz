@@ -73,6 +73,10 @@ flutter:
   # https://flutter.dev/assets-and-images/#from-packages
   assets:
      - assets/flutter_dash.png
+     - assets/flutter_icon.png
+     - assets/potato_icon.png
+     - assets/kmm_icon.png
+     - assets/react_native_icon.png
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

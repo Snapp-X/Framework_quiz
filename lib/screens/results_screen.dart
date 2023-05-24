@@ -51,12 +51,13 @@ class ResultsScreen extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 68),
                   child: Container(
-                      height: 112,
-                      width: 308,
-                      child: ImageIcon(
-                        AssetImage('assets/flutter_dash.png'),
-                        color: Colors.transparent,
-                      )),
+                    height: 112,
+                    width: 308,
+                    child: ImageIcon(
+                      AssetImage('assets/flutter_dash.png'),
+                      color: Colors.transparent,
+                    ),
+                  ),
                 ),
               ),
               Text(
@@ -72,17 +73,44 @@ class ResultsScreen extends ConsumerWidget {
                       itemCount: results.length,
                       itemBuilder: (context, index) {
                         final entries = results.entries.toList();
+                        final result = entries[index].value;
                         return ListTile(
                           title: Padding(
                             padding: EdgeInsets.only(bottom: 6),
-                            child: new LinearPercentIndicator(
-                              backgroundColor: Color(0xFF36343B),
-                              animation: true,
-                              lineHeight: 30,
-                              animationDuration: 2000,
-                              percent: entries[index].value,
-                              barRadius: const Radius.circular(16),
-                              progressColor: Color(0xFF78FCB0),
+                            child: Stack(
+                              children: [
+                                LinearPercentIndicator(
+                                  backgroundColor: Color(0xFF36343B),
+                                  animation: true,
+                                  lineHeight: 30,
+                                  animationDuration: 2000,
+                                  percent: result['percentage'],
+                                  barRadius: const Radius.circular(16),
+                                  progressColor: Color(0xFF78FCB0),
+                                ),
+                                Positioned(
+                                  left: 0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 10.0),
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      padding: const EdgeInsets.all(6),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color:
+                                            Color(0xFF36343B).withOpacity(0.5),
+                                      ),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                          result['description'],
+                                        ),
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                           subtitle: Padding(

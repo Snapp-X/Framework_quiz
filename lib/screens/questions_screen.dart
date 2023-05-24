@@ -162,7 +162,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
             Center(
               child: Container(
                 color: Colors.black,
-                width: MediaQuery.of(context).size.width * 0.07,
+                width: MediaQuery.of(context).size.width * 0.08,
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
