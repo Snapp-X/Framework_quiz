@@ -32,7 +32,6 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
 
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: buildCustomAppBar(context, currentQuestionIndex, questions, ref),
       body: Center(
         child: Container(
@@ -41,8 +40,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding:
-                    EdgeInsets.only(top: 40, bottom: 40, left: 40, right: 40),
+                padding: EdgeInsets.all(40),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Colors.white.withOpacity(0.5),
@@ -56,44 +54,30 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       padding: const EdgeInsets.only(bottom: 40),
                       child: Text(
                         questions[currentQuestionIndex],
-                        style: TextStyle(
-                            fontFamily: 'Switzer',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
-                            color: Colors.white),
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
                     ListView.separated(
                       shrinkWrap: true,
                       itemCount: answers[currentQuestionIndex].length,
                       separatorBuilder: (context, index) => Divider(
-                        color: Colors.white.withOpacity(0.5),
+                        color: Theme.of(context).dividerColor,
                       ),
                       itemBuilder: (context, index) {
                         final answer = answers[currentQuestionIndex][index];
 
-                        return Theme(
-                          data: Theme.of(context).copyWith(
-                            unselectedWidgetColor:
-                                Colors.white.withOpacity(0.5),
-                          ),
-                          child: RadioListTile(
-                            activeColor: Color(0xFF78FCB0),
-                            title: Text(answer,
-                                style: TextStyle(
-                                    fontFamily: 'Switzer',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 20,
-                                    color: Colors.white.withOpacity(0.5))),
-                            controlAffinity: ListTileControlAffinity.trailing,
-                            value: index,
-                            groupValue: selectedAnswer[currentQuestionIndex],
-                            onChanged: (value) {
-                              ref.read(selectedAnswerProvider.notifier).state =
-                                  List.from(selectedAnswer)
-                                    ..[currentQuestionIndex] = value as int;
-                            },
-                          ),
+                        return RadioListTile(
+                          activeColor: Color(0xFF78FCB0),
+                          title: Text(answer,
+                              style: Theme.of(context).textTheme.bodyMedium),
+                          controlAffinity: ListTileControlAffinity.trailing,
+                          value: index,
+                          groupValue: selectedAnswer[currentQuestionIndex],
+                          onChanged: (value) {
+                            ref.read(selectedAnswerProvider.notifier).state =
+                                List.from(selectedAnswer)
+                                  ..[currentQuestionIndex] = value as int;
+                          },
                         );
                       },
                     ),
@@ -116,29 +100,6 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
         width: double.infinity,
         height: 60,
         child: ElevatedButton(
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.resolveWith<Color>(
-              (Set<MaterialState> states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return Colors.white.withOpacity(0.5);
-                }
-                return Color(0xFF141414);
-              },
-            ),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-            ),
-            backgroundColor: MaterialStateProperty.resolveWith<Color>(
-              (Set<MaterialState> states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return Color(0xFF36343B);
-                }
-                return Color(0xFF78FCB0);
-              },
-            ),
-          ),
           onPressed: isAnswerSelected
               ? () {
                   if (isLastQuestion) {
@@ -163,7 +124,20 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   AppBar buildCustomAppBar(BuildContext context, int currentQuestionIndex,
       List<String> questions, WidgetRef ref) {
     return AppBar(
-      backgroundColor: Colors.black,
+      leading: currentQuestionIndex > 0
+          ? IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Color(0xFF78FCB0),
+              ),
+              onPressed: () {
+                if (currentQuestionIndex > 0) {
+                  ref.read(currentQuestionIndexProvider.notifier).state--;
+                  context.go('/');
+                }
+              },
+            )
+          : null,
       title: SizedBox(
         height: 30,
         width: MediaQuery.of(context).size.width * 0.4,
@@ -179,51 +153,33 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
               ),
             ),
             Align(
-                child: Text(
-                  currentQuestionIndex.toString() +
-                      "/" +
-                      questions.length.toString(),
-                  style: TextStyle(
-                      backgroundColor: Colors.black,
-                      fontFamily: 'Switzer',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20,
-                      color: Colors.white.withOpacity(0.5)),
-                ),
-                alignment: Alignment.center),
+              alignment: Alignment.center,
+              child: Text(
+                '${currentQuestionIndex + 1}/${questions.length}',
+                style: Theme.of(context).appBarTheme.titleTextStyle,
+              ),
+            ),
           ],
         ),
       ),
-      leading: currentQuestionIndex > 0
-          ? IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Color(0xFF78FCB0),
-              ),
-              onPressed: () {
-                if (currentQuestionIndex > 0) {
-                  ref.read(currentQuestionIndexProvider.notifier).state--;
-                  context.go('/');
-                }
-              },
-            )
-          : null,
+      backgroundColor: Colors.black,
     );
   }
 
-  void showDialogOnAppStart() {
+  void showDialogOnAppStart(BuildContext context) {
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (_) => BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        child: new AlertDialog(
+        child: AlertDialog(
           insetPadding: EdgeInsets.zero,
           contentPadding: EdgeInsets.zero,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           backgroundColor: Colors.grey.withOpacity(0.2),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(100))),
+            borderRadius: BorderRadius.all(Radius.circular(100)),
+          ),
           content: Builder(
             builder: (context) {
               var height = MediaQuery.of(context).size.height;
@@ -240,52 +196,20 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       child: Text(
                         'Which technology is\nbest for your app?',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'Clash Grotesk Display',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 60,
-                            color: Colors.white),
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.3,
                       height: 60,
                       child: ElevatedButton(
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.disabled)) {
-                                return Colors.white.withOpacity(0.5);
-                              }
-                              return Color(0xFF141414);
-                            },
-                          ),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                          ),
-                          backgroundColor:
-                              MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.disabled)) {
-                                return Color(0xFF36343B);
-                              }
-                              return Color(0xFF78FCB0);
-                            },
-                          ),
-                        ),
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('Find it out',
-                            style: TextStyle(
-                                fontFamily: 'SF Pro Text',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                color: Colors.black)),
+                        child: Text(
+                          'Find it out',
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
                       ),
                     ),
                   ],
@@ -302,7 +226,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
     if (isFirstRun) {
-      showDialogOnAppStart();
+      showDialogOnAppStart(context);
       prefs.setBool('isFirstRun', false);
     } else {
       return null;

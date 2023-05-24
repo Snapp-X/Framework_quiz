@@ -13,11 +13,9 @@ class ResultsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final results = ref.watch(resultProvider);
     final selectedAnswer = ref.watch(selectedAnswerProvider.notifier).state;
-
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -43,11 +41,7 @@ class ResultsScreen extends ConsumerWidget {
                 padding: const EdgeInsets.only(top: 80, bottom: 60),
                 child: Text(
                   'Flutter it is!',
-                  style: TextStyle(
-                      fontFamily: 'Clash Grotesk Display',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 60,
-                      color: Colors.white),
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),
               Expanded(
@@ -77,11 +71,7 @@ class ResultsScreen extends ConsumerWidget {
                                 const EdgeInsets.only(bottom: 10, left: 20),
                             child: Text(
                               entries[index].key,
-                              style: TextStyle(
-                                  fontFamily: 'Switzer',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20,
-                                  color: Colors.white.withOpacity(0.5)),
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                         );
