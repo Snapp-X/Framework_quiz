@@ -18,18 +18,26 @@ class ResultsScreen extends ConsumerWidget {
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.close,
-              color: Color(0xFF78FCB0),
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey.withOpacity(0.2),
             ),
-            onPressed: () {
-              ref.read(currentQuestionIndexProvider.notifier).state = 0;
-              ref.read(selectedAnswerProvider.notifier).state =
-                  List<int>.filled(selectedAnswer.length, -1);
-              context.go('/');
-            },
-          )
+            child: IconButton(
+              onPressed: () {
+                ref.read(currentQuestionIndexProvider.notifier).state = 0;
+                ref.read(selectedAnswerProvider.notifier).state =
+                    List<int>.filled(selectedAnswer.length, -1);
+                context.go('/');
+              },
+              icon: Icon(
+                Icons.close,
+                size: 24,
+                color: Color(0xFF78FCB0),
+              ),
+            ),
+          ),
         ],
       ),
       body: Center(

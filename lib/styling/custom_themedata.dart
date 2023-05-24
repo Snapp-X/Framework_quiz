@@ -27,7 +27,7 @@ ThemeData buildCustomThemeData() {
       ),
       displayLarge: TextStyle(
         fontFamily: 'Clash Grotesk Display',
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: 60,
         color: Colors.white,
       ),

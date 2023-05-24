@@ -125,17 +125,25 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
       List<String> questions, WidgetRef ref) {
     return AppBar(
       leading: currentQuestionIndex > 0
-          ? IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Color(0xFF78FCB0),
+          ? Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.grey.withOpacity(0.2),
               ),
-              onPressed: () {
-                if (currentQuestionIndex > 0) {
-                  ref.read(currentQuestionIndexProvider.notifier).state--;
-                  context.go('/');
-                }
-              },
+              child: IconButton(
+                onPressed: () {
+                  if (currentQuestionIndex > 0) {
+                    ref.read(currentQuestionIndexProvider.notifier).state--;
+                    context.go('/');
+                  }
+                },
+                icon: Icon(
+                  Icons.arrow_back,
+                  size: 24,
+                  color: Color(0xFF78FCB0),
+                ),
+              ),
             )
           : null,
       title: SizedBox(
