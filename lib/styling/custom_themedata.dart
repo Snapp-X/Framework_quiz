@@ -6,7 +6,6 @@ ThemeData buildCustomThemeData() {
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.black,
       titleTextStyle: TextStyle(
-        backgroundColor: Colors.black,
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w400,
         fontSize: 20,
