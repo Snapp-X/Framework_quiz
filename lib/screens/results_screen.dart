@@ -38,7 +38,6 @@ class ResultsScreen extends ConsumerWidget {
               },
               icon: Icon(
                 Icons.close,
-                size: screenHeight * 0.03,
                 color: Color(0xFF78FCB0),
               ),
             ),
@@ -117,8 +116,8 @@ class ResultsScreen extends ConsumerWidget {
                             ),
                           ),
                           subtitle: Padding(
-                            padding:
-                                const EdgeInsets.only(bottom: 10, left: 20),
+                            padding: EdgeInsets.only(
+                                bottom: screenHeight * 0.01, left: 20),
                             child: Text(
                               entries[index].key,
                               style: Theme.of(context).textTheme.bodyMedium,
