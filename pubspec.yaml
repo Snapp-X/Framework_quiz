@@ -73,7 +73,6 @@ flutter:
   # https://flutter.dev/assets-and-images/#from-packages
   assets:
      - assets/flutter_dash.png
-     - assets/flutter_dash.svg
      - assets/flutter_icon.png
      - assets/potato_icon.png
      - assets/kmm_icon.png
