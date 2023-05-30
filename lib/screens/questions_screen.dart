@@ -141,6 +141,9 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final mediaQuery = MediaQuery.of(context);
     final screenWidth = mediaQuery.size.width;
     final screenHeight = mediaQuery.size.height;
+    final totalQuestions = questions.length;
+    final firstHalfLength = totalQuestions ~/ 2;
+    final secondHalfLength = totalQuestions - firstHalfLength;
     return AppBar(
       leading: currentQuestionIndex > 0
           ? Container(
@@ -168,28 +171,36 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
       title: SizedBox(
         height: screenHeight * 0.03,
         width: screenWidth * 0.4,
-        child: Stack(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Center(
+            Expanded(
               child: LinearProgressIndicator(
                 minHeight: 4,
-                value: (currentQuestionIndex + 1) / questions.length,
+                value: (currentQuestionIndex + 1) / firstHalfLength,
                 backgroundColor: Color(0xFF36343B),
                 valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
               ),
             ),
-            Center(
-              child: Container(
-                color: Colors.black,
-                width: screenWidth * 0.08,
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.01),
-                child: Text(
-                  '${currentQuestionIndex + 1}/${questions.length}',
-                  style: Theme.of(context).appBarTheme.titleTextStyle,
-                ),
+            Container(
+              color: Colors.black,
+              width: screenWidth * 0.05,
+              alignment: Alignment.center,
+              child: Text(
+                '${currentQuestionIndex + 1}/${questions.length}',
+                style: Theme.of(context).appBarTheme.titleTextStyle,
               ),
             ),
+            Expanded(
+              child: LinearProgressIndicator(
+                minHeight: 4,
+                value: (currentQuestionIndex - firstHalfLength + 1) /
+                    secondHalfLength,
+                backgroundColor: Color(0xFF36343B),
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
+              ),
+            )
           ],
         ),
       ),
