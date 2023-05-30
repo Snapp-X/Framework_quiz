@@ -19,6 +19,7 @@ class ResultsScreen extends ConsumerWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
         actions: [
