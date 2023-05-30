@@ -146,6 +146,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final firstHalfLength = totalQuestions ~/ 2;
     final secondHalfLength = totalQuestions - firstHalfLength;
     return AppBar(
+      centerTitle: true,
       leading: currentQuestionIndex > 0
           ? Container(
               padding: EdgeInsets.all(8),
