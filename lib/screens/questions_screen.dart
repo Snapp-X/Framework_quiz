@@ -171,7 +171,6 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
         height: screenHeight * 0.03,
         width: screenWidth * 0.4,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(
