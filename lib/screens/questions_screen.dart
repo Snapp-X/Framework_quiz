@@ -57,7 +57,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
+                          padding: EdgeInsets.only(bottom: screenHeight * 0.03),
                           child: Text(
                             questions[currentQuestionIndex],
                             style: Theme.of(context).textTheme.bodyLarge,
@@ -78,6 +78,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                                   style:
                                       Theme.of(context).textTheme.bodyMedium),
                               controlAffinity: ListTileControlAffinity.trailing,
+                              visualDensity: VisualDensity.compact,
                               value: index,
                               groupValue: selectedAnswer[currentQuestionIndex],
                               onChanged: (value) {
@@ -113,7 +114,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
       padding: EdgeInsets.only(bottom: screenHeight * 0.08),
       child: SizedBox(
         width: screenWidth * 0.4,
-        height: screenHeight * 0.08,
+        height: screenHeight * 0.1,
         child: ElevatedButton(
           onPressed: isAnswerSelected
               ? () {
@@ -217,54 +218,50 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
       context: context,
       builder: (_) => BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        child: Stack(children: [
-          AlertDialog(
-            insetPadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            backgroundColor: Colors.grey.withOpacity(0.2),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(100)),
-            ),
-            content: Builder(
-              builder: (context) {
-                return Container(
-                  height: screenHeight - (screenHeight * 0.1),
-                  width: screenWidth - (screenWidth * 0.07),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: screenWidth * 0.1),
-                        child: Text(
-                          'Which technology is\nbest for your app?',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.displayLarge,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: SizedBox(
-                          width: screenWidth * 0.4,
-                          height: screenHeight * 0.08,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              'Find it out',
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+        child: AlertDialog(
+          scrollable: true,
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.grey.withOpacity(0.2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(100)),
           ),
-        ]),
+          content: Builder(
+            builder: (context) {
+              return Container(
+                height: screenHeight - (screenHeight * 0.1),
+                width: screenWidth - (screenWidth * 0.07),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: screenWidth * 0.1),
+                      child: Text(
+                        'Which technology is\nbest for your app?',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
+                    ),
+                    SizedBox(
+                      width: screenWidth * 0.4,
+                      height: screenHeight * 0.1,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Find it out',
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
