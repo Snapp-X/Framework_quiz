@@ -24,8 +24,6 @@ class ResultsScreen extends ConsumerWidget {
         automaticallyImplyLeading: false,
         actions: [
           Container(
-            height: screenHeight * 0.03,
-            width: screenWidth * 0.03,
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               shape: BoxShape.circle,

@@ -148,8 +148,6 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     return AppBar(
       leading: currentQuestionIndex > 0
           ? Container(
-              height: screenHeight * 0.03,
-              width: screenWidth * 0.03,
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
