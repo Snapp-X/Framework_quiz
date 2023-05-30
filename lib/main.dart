@@ -11,7 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme: buildCustomThemeData(),
+      builder: (context, child) {
+        return Theme(
+          data: buildCustomThemeData(context),
+          child: child!,
+        );
+      },
       routerConfig: AppRouter.router,
     );
   }

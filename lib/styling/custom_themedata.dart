@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-ThemeData buildCustomThemeData() {
+ThemeData buildCustomThemeData(BuildContext context) {
   return ThemeData(
     scaffoldBackgroundColor: Colors.black,
     appBarTheme: AppBarTheme(
@@ -8,7 +8,7 @@ ThemeData buildCustomThemeData() {
       titleTextStyle: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w400,
-        fontSize: 20,
+        fontSize: MediaQuery.of(context).size.width * 0.015,
         color: Colors.white.withOpacity(0.5),
       ),
     ),
@@ -16,25 +16,25 @@ ThemeData buildCustomThemeData() {
       bodyLarge: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w500,
-        fontSize: 20,
+        fontSize: MediaQuery.of(context).size.width * 0.015,
         color: Colors.white,
       ),
       bodyMedium: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w500,
-        fontSize: 20,
+        fontSize: MediaQuery.of(context).size.width * 0.015,
         color: Colors.white.withOpacity(0.5),
       ),
       displayLarge: TextStyle(
         fontFamily: 'Clash Grotesk Display',
         fontWeight: FontWeight.w600,
-        fontSize: 60,
+        fontSize: MediaQuery.of(context).size.width * 0.05,
         color: Colors.white,
       ),
       labelLarge: TextStyle(
         fontFamily: 'SF Pro Text',
         fontWeight: FontWeight.w600,
-        fontSize: 18,
+        fontSize: MediaQuery.of(context).size.width * 0.015,
         color: Colors.black,
       ),
     ),
