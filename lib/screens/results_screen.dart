@@ -11,6 +11,9 @@ class ResultsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    final screenHeight = mediaQuery.size.height;
     final results = ref.watch(resultProvider);
     final selectedAnswer = ref.watch(selectedAnswerProvider.notifier).state;
     return Scaffold(
@@ -34,7 +37,7 @@ class ResultsScreen extends ConsumerWidget {
               },
               icon: Icon(
                 Icons.close,
-                size: 24,
+                size: screenHeight * 0.03,
                 color: Color(0xFF78FCB0),
               ),
             ),
@@ -49,7 +52,7 @@ class ResultsScreen extends ConsumerWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 68),
+                  padding: EdgeInsets.only(right: screenWidth * 0.068),
                   child: Container(
                     height: 112,
                     width: 308,
@@ -68,7 +71,7 @@ class ResultsScreen extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    width: screenWidth * 0.4,
                     child: ListView.builder(
                       itemCount: results.length,
                       itemBuilder: (context, index) {
@@ -98,8 +101,7 @@ class ResultsScreen extends ConsumerWidget {
                                       padding: const EdgeInsets.all(6),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color:
-                                            Color(0xFF36343B).withOpacity(0.5),
+                                        color: Colors.grey.withOpacity(0.4),
                                       ),
                                       child: ImageIcon(
                                         AssetImage(
