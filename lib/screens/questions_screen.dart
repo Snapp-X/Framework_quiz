@@ -31,7 +31,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
     final selectedAnswer = ref.watch(selectedAnswerProvider);
 
-    final isAnswerSelected = selectedAnswer[currentQuestionIndex] != -1;
+    final isAnswerSelected = selectedAnswer[currentQuestionIndex].isNotEmpty;
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
 
     return Scaffold(
@@ -40,7 +40,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
         child: Padding(
           padding: EdgeInsets.only(top: screenHeight * 0.06),
           child: Center(
-            child: Container(
+            child: SizedBox(
               width: screenWidth * 0.4,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -71,21 +71,32 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                           ),
                           itemBuilder: (context, index) {
                             final answer = answers[currentQuestionIndex][index];
+                            final isSelected =
+                                selectedAnswer[currentQuestionIndex]
+                                    .contains(index);
 
-                            return RadioListTile(
-                              activeColor: Color(0xFF78FCB0),
-                              title: Text(answer,
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
+                            return CheckboxListTile(
+                              activeColor: const Color(0xFF78FCB0),
+                              title: Text(
+                                answer,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
                               controlAffinity: ListTileControlAffinity.trailing,
-                              visualDensity: VisualDensity.compact,
-                              value: index,
-                              groupValue: selectedAnswer[currentQuestionIndex],
+                              value: isSelected,
                               onChanged: (value) {
+                                final newSelectedAnswers = Set<int>.from(
+                                    selectedAnswer[currentQuestionIndex]);
+
+                                if (value == true) {
+                                  newSelectedAnswers.add(index);
+                                } else {
+                                  newSelectedAnswers.remove(index);
+                                }
+
                                 ref
                                     .read(selectedAnswerProvider.notifier)
                                     .state = List.from(selectedAnswer)
-                                  ..[currentQuestionIndex] = value as int;
+                                  ..[currentQuestionIndex] = newSelectedAnswers;
                               },
                             );
                           },
@@ -149,10 +160,10 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
       centerTitle: true,
       leading: currentQuestionIndex > 0
           ? Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color(0xFF36343B).withOpacity(0.5),
+                color: const Color(0xFF36343B).withOpacity(0.5),
               ),
               child: IconButton(
                 onPressed: () {
@@ -161,7 +172,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                     context.go('/');
                   }
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back,
                   color: Color(0xFF78FCB0),
                 ),
@@ -178,8 +189,9 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
               child: LinearProgressIndicator(
                 minHeight: 4,
                 value: (currentQuestionIndex + 1) / firstHalfLength,
-                backgroundColor: Color(0xFF36343B),
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
+                backgroundColor: const Color(0xFF36343B),
+                valueColor:
+                    const AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
               ),
             ),
             Container(
@@ -196,8 +208,9 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                 minHeight: 4,
                 value: (currentQuestionIndex - firstHalfLength + 1) /
                     secondHalfLength,
-                backgroundColor: Color(0xFF36343B),
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
+                backgroundColor: const Color(0xFF36343B),
+                valueColor:
+                    const AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
               ),
             )
           ],
@@ -222,12 +235,12 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
           contentPadding: EdgeInsets.zero,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           backgroundColor: Colors.grey.withOpacity(0.2),
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(100)),
           ),
           content: Builder(
             builder: (context) {
-              return Container(
+              return SizedBox(
                 height: screenHeight - (screenHeight * 0.1),
                 width: screenWidth - (screenWidth * 0.07),
                 child: Column(
@@ -236,7 +249,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                     Padding(
                       padding: EdgeInsets.only(bottom: screenWidth * 0.1),
                       child: Text(
-                        'Which technology is\nbest for your app?',
+                        'Which technology is\nbest for your x-platform-app',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.displayLarge,
                       ),

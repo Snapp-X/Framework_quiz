@@ -46,7 +46,7 @@ ThemeData buildCustomThemeData(BuildContext context) {
             if (states.contains(MaterialState.disabled)) {
               return Colors.white.withOpacity(0.5);
             }
-            return Color(0xFF141414);
+            return const Color(0xFF141414);
           },
         ),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -57,18 +57,18 @@ ThemeData buildCustomThemeData(BuildContext context) {
         backgroundColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {
             if (states.contains(MaterialState.disabled)) {
-              return Color(0xFF36343B);
+              return const Color(0xFF36343B);
             }
-            return Color(0xFF78FCB0);
+            return const Color(0xFF78FCB0);
           },
         ),
       ),
     ),
-    radioTheme: RadioThemeData(
+    checkboxTheme: CheckboxThemeData(
       fillColor: MaterialStateProperty.resolveWith<Color>(
         (Set<MaterialState> states) {
           if (states.contains(MaterialState.selected)) {
-            return Color(0xFF78FCB0);
+            return const Color(0xFF78FCB0);
           }
           return Colors.white.withOpacity(0.5);
         },

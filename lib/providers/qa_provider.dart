@@ -65,7 +65,7 @@ final answersProvider = Provider<List<List<String>>>((ref) => [
 
 final currentQuestionIndexProvider = StateProvider<int>((ref) => 0);
 
-final selectedAnswerProvider = StateProvider<List<int>>((ref) {
+final selectedAnswerProvider = StateProvider<List<Set<int>>>((ref) {
   final questions = ref.watch(questionsProvider);
-  return List<int>.filled(questions.length, -1);
+  return List<Set<int>>.filled(questions.length, <int>{});
 });
