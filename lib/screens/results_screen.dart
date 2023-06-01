@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:snappx_quiz/screens/questions_screen.dart';
 
 import '../providers/qa_provider.dart';
 import '../providers/results_provider.dart';
@@ -30,11 +31,15 @@ class ResultsScreen extends ConsumerWidget {
               color: const Color(0xFF36343B).withOpacity(0.5),
             ),
             child: IconButton(
-              onPressed: () {
+              onPressed: () async {
                 ref.read(currentQuestionIndexProvider.notifier).state = 0;
                 ref.read(selectedAnswerProvider.notifier).state =
                     List<Set<int>>.filled(selectedAnswer.length, <int>{});
-                context.go('/');
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.setBool('isFirstRun', true);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => QuestionsScreen()));
+                //    context.go('/');
               },
               icon: const Icon(
                 Icons.close,
