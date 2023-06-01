@@ -76,6 +76,7 @@ ThemeData buildCustomThemeData(BuildContext context) {
       overlayColor: MaterialStateProperty.all<Color>(
         Colors.white.withOpacity(0.5),
       ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       splashRadius: 0,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       mouseCursor: MaterialStateProperty.resolveWith<MouseCursor?>(
