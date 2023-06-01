@@ -35,78 +35,78 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
 
     return Scaffold(
-      appBar: buildCustomAppBar(context, currentQuestionIndex, questions, ref),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(top: screenHeight * 0.06),
-          child: Center(
-            child: SizedBox(
-              width: screenWidth * 0.4,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(screenWidth * 0.04),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.5),
-                        width: 3.0,
-                      ),
-                      borderRadius: BorderRadius.circular(60),
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(bottom: screenHeight * 0.03),
-                          child: Text(
-                            questions[currentQuestionIndex],
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          itemCount: answers[currentQuestionIndex].length,
-                          separatorBuilder: (context, index) => Divider(
-                            color: Theme.of(context).dividerColor,
-                          ),
-                          itemBuilder: (context, index) {
-                            final answer = answers[currentQuestionIndex][index];
-                            final isSelected =
-                                selectedAnswer[currentQuestionIndex]
-                                    .contains(index);
-
-                            return CheckboxListTile(
-                              activeColor: const Color(0xFF78FCB0),
-                              title: Text(
-                                answer,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              controlAffinity: ListTileControlAffinity.trailing,
-                              value: isSelected,
-                              onChanged: (value) {
-                                final newSelectedAnswers = Set<int>.from(
-                                    selectedAnswer[currentQuestionIndex]);
-
-                                if (value == true) {
-                                  newSelectedAnswers.add(index);
-                                } else {
-                                  newSelectedAnswers.remove(index);
-                                }
-
-                                ref
-                                    .read(selectedAnswerProvider.notifier)
-                                    .state = List.from(selectedAnswer)
-                                  ..[currentQuestionIndex] = newSelectedAnswers;
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(40),
+                child: buildCustomAppBar(
+                    context, currentQuestionIndex, questions, ref),
               ),
-            ),
+              Container(
+                width: screenWidth * 0.4,
+                padding: EdgeInsets.all(screenWidth * 0.04),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.5),
+                    width: 3.0,
+                  ),
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: screenHeight * 0.03),
+                      child: Text(
+                        questions[currentQuestionIndex],
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: answers[currentQuestionIndex].length,
+                      separatorBuilder: (context, index) => Divider(
+                        color: Theme.of(context).dividerColor,
+                      ),
+                      itemBuilder: (context, index) {
+                        final answer = answers[currentQuestionIndex][index];
+                        final isSelected = selectedAnswer[currentQuestionIndex]
+                            .contains(index);
+
+                        return CheckboxListTile(
+                          activeColor: const Color(0xFF78FCB0),
+                          title: Text(
+                            answer,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          controlAffinity: ListTileControlAffinity.trailing,
+                          value: isSelected,
+                          onChanged: (value) {
+                            final newSelectedAnswers = Set<int>.from(
+                                selectedAnswer[currentQuestionIndex]);
+
+                            if (value == true) {
+                              newSelectedAnswers.add(index);
+                            } else {
+                              newSelectedAnswers.remove(index);
+                            }
+
+                            ref.read(selectedAnswerProvider.notifier).state =
+                                List.from(selectedAnswer)
+                                  ..[currentQuestionIndex] = newSelectedAnswers;
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -157,6 +157,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final firstHalfLength = totalQuestions ~/ 2;
     final secondHalfLength = totalQuestions - firstHalfLength;
     return AppBar(
+      automaticallyImplyLeading: false,
       centerTitle: true,
       leading: currentQuestionIndex > 0
           ? Container(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:snappx_quiz/screens/questions_screen.dart';
 
 import '../providers/qa_provider.dart';
 import '../providers/results_provider.dart';
@@ -18,55 +18,25 @@ class ResultsScreen extends ConsumerWidget {
     final results = ref.watch(resultProvider);
     final selectedAnswer = ref.watch(selectedAnswerProvider.notifier).state;
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        actions: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFF36343B).withOpacity(0.5),
-            ),
-            child: IconButton(
-              onPressed: () async {
-                ref.read(currentQuestionIndexProvider.notifier).state = 0;
-                ref.read(selectedAnswerProvider.notifier).state =
-                    List<Set<int>>.filled(selectedAnswer.length, <int>{});
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setBool('isFirstRun', true);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => QuestionsScreen()));
-                //    context.go('/');
-              },
-              icon: const Icon(
-                Icons.close,
-                color: Color(0xFF78FCB0),
-              ),
-            ),
-          ),
-        ],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: screenWidth * 0.068),
-                child: const SizedBox(
-                  height: 112,
-                  width: 308,
-                  child: ImageIcon(
-                    AssetImage('assets/flutter_dash.png'),
-                    color: Colors.transparent,
-                  ),
-                ),
-              ),
+            Padding(
+              padding: const EdgeInsets.all(40),
+              child: buildCustomAppBar(ref, selectedAnswer, context),
             ),
+            /*      const SizedBox(
+              height: 112,
+              width: 308,
+              child: ImageIcon(
+                AssetImage('assets/flutter_dash.png'),
+                color: Colors.transparent,
+              ),
+            ),*/
             Text(
               'Flutter it is!',
               style: Theme.of(context).textTheme.displayLarge,
@@ -136,6 +106,39 @@ class ResultsScreen extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+
+  AppBar buildCustomAppBar(
+      WidgetRef ref, List<Set<int>> selectedAnswer, BuildContext context) {
+    return AppBar(
+      centerTitle: true,
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      automaticallyImplyLeading: false,
+      actions: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: const Color(0xFF36343B).withOpacity(0.5),
+          ),
+          child: IconButton(
+            onPressed: () async {
+              ref.read(currentQuestionIndexProvider.notifier).state = 0;
+              ref.read(selectedAnswerProvider.notifier).state =
+                  List<Set<int>>.filled(selectedAnswer.length, <int>{});
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setBool('isFirstRun', true);
+              context.push('/');
+            },
+            icon: const Icon(
+              Icons.close,
+              color: Color(0xFF78FCB0),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

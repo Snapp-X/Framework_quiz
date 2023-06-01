@@ -6,20 +6,14 @@ import '../screens/results_screen.dart';
 
 class AppRouter {
   static final GoRouter _router = GoRouter(
-    routes: <RouteBase>[
+    routes: <GoRoute>[
       GoRoute(
         path: '/',
-        builder: (BuildContext context, GoRouterState state) {
-          return const QuestionsScreen();
-        },
-        routes: <RouteBase>[
-          GoRoute(
-            path: 'results',
-            builder: (BuildContext context, GoRouterState state) {
-              return const ResultsScreen();
-            },
-          ),
-        ],
+        pageBuilder: (context, state) => MaterialPage(child: QuestionsScreen()),
+      ),
+      GoRoute(
+        path: '/results',
+        pageBuilder: (context, state) => MaterialPage(child: ResultsScreen()),
       ),
     ],
   );
