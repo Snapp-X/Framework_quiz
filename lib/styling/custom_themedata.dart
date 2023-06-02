@@ -8,7 +8,7 @@ ThemeData buildCustomThemeData(BuildContext context) {
       titleTextStyle: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w400,
-        fontSize: MediaQuery.of(context).size.height * 0.015,
+        fontSize: MediaQuery.of(context).size.height * 0.013,
         color: Colors.white.withOpacity(0.5),
       ),
     ),
@@ -16,13 +16,13 @@ ThemeData buildCustomThemeData(BuildContext context) {
       bodyLarge: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w500,
-        fontSize: MediaQuery.of(context).size.width * 0.015,
+        fontSize: MediaQuery.of(context).size.width * 0.013,
         color: Colors.white,
       ),
       bodyMedium: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w500,
-        fontSize: MediaQuery.of(context).size.width * 0.015,
+        fontSize: MediaQuery.of(context).size.width * 0.013,
         color: Colors.white.withOpacity(0.5),
       ),
       displayLarge: TextStyle(
@@ -34,7 +34,7 @@ ThemeData buildCustomThemeData(BuildContext context) {
       labelLarge: TextStyle(
         fontFamily: 'SF Pro Text',
         fontWeight: FontWeight.w600,
-        fontSize: MediaQuery.of(context).size.width * 0.015,
+        fontSize: MediaQuery.of(context).size.width * 0.013,
         color: Colors.black,
       ),
     ),
