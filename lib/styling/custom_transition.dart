@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:snappx_quiz/screens/results_screen.dart';
 
@@ -45,9 +46,36 @@ class _LottieTransitionState extends State<LottieTransition>
     return AnimatedBuilder(
       animation: widget.animation,
       builder: (context, child) {
-        return Lottie.asset(
-          'assets/loading_indicator.json',
-          controller: _controller,
+        return Scaffold(
+          body: Stack(
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  margin: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.15,
+                      right: MediaQuery.of(context).size.width * 0.10),
+                  child: SvgPicture.asset(
+                    'assets/loading_indicator_wording.svg',
+                    colorFilter: const ColorFilter.mode(
+                      Colors.transparent,
+                      BlendMode.srcIn,
+                    ),
+                    semanticsLabel: 'Flutter Wording',
+                  ),
+                ),
+              ),
+              Center(
+                child: Lottie.asset(
+                  'assets/loading_indicator.json',
+                  controller: _controller,
+                  animate: false,
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.38,
+                ),
+              ),
+            ],
+          ),
         );
       },
       child: widget.child,

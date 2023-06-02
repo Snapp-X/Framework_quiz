@@ -80,6 +80,7 @@ flutter:
      - assets/kmm_icon.png
      - assets/react_native_icon.png
      - assets/loading_indicator.json
+     - assets/loading_indicator_wording.svg
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

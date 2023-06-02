@@ -28,7 +28,7 @@ class ResultsScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 40, left: 40, right: 40),
+              padding: const EdgeInsets.only(left: 40, right: 26),
               child: buildCustomAppBar(ref, selectedAnswer, context),
             ),
             Row(
