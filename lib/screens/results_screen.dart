@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +18,7 @@ class ResultsScreen extends ConsumerWidget {
     final screenHeight = mediaQuery.size.height;
     final results = ref.watch(resultProvider);
     final selectedAnswer = ref.watch(selectedAnswerProvider.notifier).state;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -29,17 +31,32 @@ class ResultsScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(bottom: 40, left: 40, right: 40),
               child: buildCustomAppBar(ref, selectedAnswer, context),
             ),
-            /*      const SizedBox(
-              height: 112,
-              width: 308,
-              child: ImageIcon(
-                AssetImage('assets/flutter_dash.png'),
-                color: Colors.transparent,
-              ),
-            ),*/
-            Text(
-              'Flutter it is!',
-              style: Theme.of(context).textTheme.displayLarge,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: SizedBox(),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Text(
+                      'Flutter it is!',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: SvgPicture.asset(
+                    'assets/flutter_dash.svg',
+                    colorFilter: const ColorFilter.mode(
+                        Colors.transparent, BlendMode.srcIn),
+                    semanticsLabel: 'Flutter Icon',
+                  ),
+                ),
+              ],
             ),
             Expanded(
               child: Padding(
