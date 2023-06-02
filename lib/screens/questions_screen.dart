@@ -18,7 +18,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => checkFirstRun(context));
+    WidgetsBinding.instance.addPostFrameCallback((_) => checkFirstRun());
   }
 
   @override
@@ -221,7 +221,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     );
   }
 
-  void showDialogOnAppStart(BuildContext context) {
+  void showDialogOnAppStart() {
     final mediaQuery = MediaQuery.of(context);
     final screenWidth = mediaQuery.size.width;
     final screenHeight = mediaQuery.size.height;
@@ -278,14 +278,12 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     );
   }
 
-  Future checkFirstRun(BuildContext context) async {
+  Future<void> checkFirstRun() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
     if (isFirstRun) {
-      showDialogOnAppStart(context);
+      showDialogOnAppStart();
       prefs.setBool('isFirstRun', false);
-    } else {
-      return null;
     }
   }
 }

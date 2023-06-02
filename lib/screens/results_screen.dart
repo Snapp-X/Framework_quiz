@@ -124,12 +124,11 @@ class ResultsScreen extends ConsumerWidget {
             color: const Color(0xFF36343B).withOpacity(0.5),
           ),
           child: IconButton(
-            onPressed: () async {
+            onPressed: () {
               ref.read(currentQuestionIndexProvider.notifier).state = 0;
               ref.read(selectedAnswerProvider.notifier).state =
                   List<Set<int>>.filled(selectedAnswer.length, <int>{});
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setBool('isFirstRun', true);
+              modifyPrefs();
               context.push('/');
             },
             icon: const Icon(
@@ -140,5 +139,10 @@ class ResultsScreen extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  Future<void> modifyPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isFirstRun', true);
   }
 }
