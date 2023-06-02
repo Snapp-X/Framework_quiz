@@ -73,6 +73,14 @@ ThemeData buildCustomThemeData(BuildContext context) {
           return Colors.white.withOpacity(0.5);
         },
       ),
+      checkColor: MaterialStateProperty.resolveWith<Color>(
+        (Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.black;
+          }
+          return Colors.black;
+        },
+      ),
       overlayColor: MaterialStateProperty.all<Color>(
         Colors.white.withOpacity(0.5),
       ),
