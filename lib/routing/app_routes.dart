@@ -9,11 +9,13 @@ class AppRouter {
     routes: <GoRoute>[
       GoRoute(
         path: '/',
-        pageBuilder: (context, state) => MaterialPage(child: QuestionsScreen()),
+        pageBuilder: (context, state) =>
+            const MaterialPage(child: QuestionsScreen()),
       ),
       GoRoute(
         path: '/results',
-        pageBuilder: (context, state) => MaterialPage(child: ResultsScreen()),
+        pageBuilder: (context, state) =>
+            const MaterialPage(child: ResultsScreen()),
       ),
     ],
   );

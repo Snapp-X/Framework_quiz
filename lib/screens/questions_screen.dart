@@ -44,7 +44,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(40),
+                padding: const EdgeInsets.only(bottom: 40, left: 40, right: 40),
                 child: buildCustomAppBar(
                     context, currentQuestionIndex, questions, ref),
               ),
