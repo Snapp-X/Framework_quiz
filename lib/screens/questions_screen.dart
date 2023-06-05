@@ -37,6 +37,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
     String userAgent = html.window.navigator.userAgent;
     bool isMobileDevice = userAgent.contains('Mobile');
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -74,57 +75,48 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                         ),
                       ),
                     ),
-                    Scrollbar(
-                      controller: scrollController,
-                      child: SingleChildScrollView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        child: SizedBox(
-                          height: isMobileDevice
-                              ? screenHeight * 0.75
-                              : screenHeight * 0.35,
-                          child: ListView.separated(
-                            controller: scrollController,
-                            shrinkWrap: true,
-                            itemCount: answers[currentQuestionIndex].length,
-                            separatorBuilder: (context, index) => Divider(
-                              color: Theme.of(context).dividerColor,
-                            ),
-                            itemBuilder: (context, index) {
-                              final answer =
-                                  answers[currentQuestionIndex][index];
-                              final isSelected =
-                                  selectedAnswer[currentQuestionIndex]
-                                      .contains(index);
-
-                              return CheckboxListTile(
-                                activeColor: const Color(0xFF78FCB0),
-                                title: Text(
-                                  answer,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                controlAffinity:
-                                    ListTileControlAffinity.trailing,
-                                value: isSelected,
-                                onChanged: (value) {
-                                  final newSelectedAnswers = Set<int>.from(
-                                      selectedAnswer[currentQuestionIndex]);
-
-                                  if (value == true) {
-                                    newSelectedAnswers.add(index);
-                                  } else {
-                                    newSelectedAnswers.remove(index);
-                                  }
-
-                                  ref
-                                      .read(selectedAnswerProvider.notifier)
-                                      .state = List.from(selectedAnswer)
-                                    ..[currentQuestionIndex] =
-                                        newSelectedAnswers;
-                                },
-                              );
-                            },
-                          ),
+                    SizedBox(
+                      height: isMobileDevice
+                          ? screenHeight * 0.75
+                          : screenHeight * 0.35,
+                      child: ListView.separated(
+                        controller: scrollController,
+                        shrinkWrap: true,
+                        itemCount: answers[currentQuestionIndex].length,
+                        separatorBuilder: (context, index) => Divider(
+                          color: Theme.of(context).dividerColor,
                         ),
+                        itemBuilder: (context, index) {
+                          final answer = answers[currentQuestionIndex][index];
+                          final isSelected =
+                              selectedAnswer[currentQuestionIndex]
+                                  .contains(index);
+
+                          return CheckboxListTile(
+                            activeColor: const Color(0xFF78FCB0),
+                            title: Text(
+                              answer,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            controlAffinity: ListTileControlAffinity.trailing,
+                            value: isSelected,
+                            onChanged: (value) {
+                              final newSelectedAnswers = Set<int>.from(
+                                  selectedAnswer[currentQuestionIndex]);
+
+                              if (value == true) {
+                                newSelectedAnswers.add(index);
+                              } else {
+                                newSelectedAnswers.remove(index);
+                              }
+
+                              ref
+                                  .read(selectedAnswerProvider.notifier)
+                                  .state = List.from(selectedAnswer)
+                                ..[currentQuestionIndex] = newSelectedAnswers;
+                            },
+                          );
+                        },
                       ),
                     ),
                   ],
