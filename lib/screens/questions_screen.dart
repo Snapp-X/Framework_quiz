@@ -238,9 +238,6 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   }
 
   void showDialogOnAppStart() {
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
-    final screenHeight = mediaQuery.size.height;
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -258,13 +255,16 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
           content: Builder(
             builder: (context) {
               return SizedBox(
-                height: screenHeight - (screenHeight * 0.1),
-                width: screenWidth - (screenWidth * 0.07),
+                height: MediaQuery.of(context).size.height -
+                    (MediaQuery.of(context).size.height * 0.1),
+                width: MediaQuery.of(context).size.width -
+                    (MediaQuery.of(context).size.width * 0.07),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(bottom: screenWidth * 0.1),
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.width * 0.1),
                       child: Text(
                         'Which technology is\nbest for your x-platform-app',
                         textAlign: TextAlign.center,
@@ -272,8 +272,8 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: screenWidth * 0.4,
-                      height: screenHeight * 0.1,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.1,
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
