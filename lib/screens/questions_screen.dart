@@ -74,7 +74,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       ),
                     ),
                     SingleChildScrollView(
-                      //   physics: const NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       child: SizedBox(
                         height: isMobileDevice
                             ? screenHeight * 0.75
