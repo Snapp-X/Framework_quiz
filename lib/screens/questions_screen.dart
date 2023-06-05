@@ -40,6 +40,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
@@ -178,6 +179,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     return AppBar(
       automaticallyImplyLeading: false,
       centerTitle: true,
+      elevation: 0,
       leading: currentQuestionIndex > 0
           ? Container(
               padding: const EdgeInsets.all(8),
@@ -215,7 +217,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
               ),
             ),
             Container(
-              color: Colors.black,
+              color: const Color(0xFF141414),
               width: screenWidth * 0.05,
               alignment: Alignment.center,
               child: Text(
@@ -236,7 +238,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
           ],
         ),
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF141414),
     );
   }
 

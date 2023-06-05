@@ -21,6 +21,7 @@ class ResultsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         automaticallyImplyLeading: false,
       ),
       body: Center(
@@ -131,7 +132,7 @@ class ResultsScreen extends ConsumerWidget {
     return AppBar(
       centerTitle: true,
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFF141414),
       automaticallyImplyLeading: false,
       actions: [
         Container(

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 ThemeData buildCustomThemeData(BuildContext context) {
   return ThemeData(
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: const Color(0xFF141414),
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF141414),
       titleTextStyle: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w400,
