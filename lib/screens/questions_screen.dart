@@ -38,96 +38,101 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     String userAgent = html.window.navigator.userAgent;
     bool isMobileDevice = userAgent.contains('Mobile');
 
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-      ),
-      body: SingleChildScrollView(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20, left: 26, right: 26),
-                child: buildCustomAppBar(
-                    context, currentQuestionIndex, questions, ref),
-              ),
-              Container(
-                width: isMobileDevice ? screenWidth * 0.8 : screenWidth * 0.4,
-                padding: EdgeInsets.all(screenWidth * 0.04),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.5),
-                    width: 3.0,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          automaticallyImplyLeading: false,
+        ),
+        body: SingleChildScrollView(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 20, left: 26, right: 26),
+                  child: buildCustomAppBar(
+                      context, currentQuestionIndex, questions, ref),
+                ),
+                Container(
+                  width: isMobileDevice ? screenWidth * 0.8 : screenWidth * 0.4,
+                  padding: EdgeInsets.all(screenWidth * 0.04),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.5),
+                      width: 3.0,
+                    ),
+                    borderRadius: BorderRadius.circular(60),
                   ),
-                  borderRadius: BorderRadius.circular(60),
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: screenHeight * 0.02),
-                      child: SizedBox(
-                        height: screenHeight * 0.07,
-                        child: Text(
-                          questions[currentQuestionIndex],
-                          style: Theme.of(context).textTheme.bodyLarge,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: screenHeight * 0.02),
+                        child: SizedBox(
+                          height: screenHeight * 0.07,
+                          child: Text(
+                            questions[currentQuestionIndex],
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: isMobileDevice
-                          ? screenHeight * 0.75
-                          : screenHeight * 0.35,
-                      child: ListView.separated(
-                        controller: scrollController,
-                        shrinkWrap: true,
-                        itemCount: answers[currentQuestionIndex].length,
-                        separatorBuilder: (context, index) => Divider(
-                          color: Theme.of(context).dividerColor,
+                      SizedBox(
+                        height: isMobileDevice
+                            ? screenHeight * 0.75
+                            : screenHeight * 0.35,
+                        child: ListView.separated(
+                          controller: scrollController,
+                          shrinkWrap: true,
+                          itemCount: answers[currentQuestionIndex].length,
+                          separatorBuilder: (context, index) => Divider(
+                            indent: 20,
+                            endIndent: 20,
+                            color: Theme.of(context).dividerColor,
+                          ),
+                          itemBuilder: (context, index) {
+                            final answer = answers[currentQuestionIndex][index];
+                            final isSelected =
+                                selectedAnswer[currentQuestionIndex]
+                                    .contains(index);
+
+                            return CheckboxListTile(
+                              activeColor: const Color(0xFF78FCB0),
+                              title: Text(
+                                answer,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              controlAffinity: ListTileControlAffinity.trailing,
+                              value: isSelected,
+                              onChanged: (value) {
+                                final newSelectedAnswers = Set<int>.from(
+                                    selectedAnswer[currentQuestionIndex]);
+
+                                if (value == true) {
+                                  newSelectedAnswers.add(index);
+                                } else {
+                                  newSelectedAnswers.remove(index);
+                                }
+
+                                ref
+                                    .read(selectedAnswerProvider.notifier)
+                                    .state = List.from(selectedAnswer)
+                                  ..[currentQuestionIndex] = newSelectedAnswers;
+                              },
+                            );
+                          },
                         ),
-                        itemBuilder: (context, index) {
-                          final answer = answers[currentQuestionIndex][index];
-                          final isSelected =
-                              selectedAnswer[currentQuestionIndex]
-                                  .contains(index);
-
-                          return CheckboxListTile(
-                            activeColor: const Color(0xFF78FCB0),
-                            title: Text(
-                              answer,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            controlAffinity: ListTileControlAffinity.trailing,
-                            value: isSelected,
-                            onChanged: (value) {
-                              final newSelectedAnswers = Set<int>.from(
-                                  selectedAnswer[currentQuestionIndex]);
-
-                              if (value == true) {
-                                newSelectedAnswers.add(index);
-                              } else {
-                                newSelectedAnswers.remove(index);
-                              }
-
-                              ref
-                                  .read(selectedAnswerProvider.notifier)
-                                  .state = List.from(selectedAnswer)
-                                ..[currentQuestionIndex] = newSelectedAnswers;
-                            },
-                          );
-                        },
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              buildBottomButton(isAnswerSelected, isLastQuestion, context),
-              const SizedBox(
-                height: 20,
-              )
-            ],
+                buildBottomButton(isAnswerSelected, isLastQuestion, context),
+                const SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -45,15 +45,15 @@ ThemeData buildCustomThemeData(BuildContext context) {
       interactive: true,
       radius: const Radius.circular(10.0),
       thumbColor: MaterialStateProperty.all<Color>(
-        Colors.white.withOpacity(0.5),
+        const Color(0xFF36343B),
       ),
       thickness: MaterialStateProperty.all(5.0),
       minThumbLength: 10,
       trackColor: MaterialStateProperty.all<Color>(
-        Colors.grey.withOpacity(0.5),
+        const Color(0xFF36343B).withOpacity(0.5),
       ),
       trackBorderColor: MaterialStateProperty.all<Color>(
-        Colors.grey.withOpacity(0.8),
+        const Color(0xFF36343B),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
