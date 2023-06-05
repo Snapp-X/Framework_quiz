@@ -31,6 +31,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final answers = ref.watch(answersProvider);
     final currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
     final selectedAnswer = ref.watch(selectedAnswerProvider);
+    final ScrollController scrollController = ScrollController();
 
     final isAnswerSelected = selectedAnswer[currentQuestionIndex].isNotEmpty;
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
@@ -73,49 +74,56 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                         ),
                       ),
                     ),
-                    SingleChildScrollView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      child: SizedBox(
-                        height: isMobileDevice
-                            ? screenHeight * 0.75
-                            : screenHeight * 0.35,
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          itemCount: answers[currentQuestionIndex].length,
-                          separatorBuilder: (context, index) => Divider(
-                            color: Theme.of(context).dividerColor,
+                    Scrollbar(
+                      controller: scrollController,
+                      child: SingleChildScrollView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        child: SizedBox(
+                          height: isMobileDevice
+                              ? screenHeight * 0.75
+                              : screenHeight * 0.35,
+                          child: ListView.separated(
+                            controller: scrollController,
+                            shrinkWrap: true,
+                            itemCount: answers[currentQuestionIndex].length,
+                            separatorBuilder: (context, index) => Divider(
+                              color: Theme.of(context).dividerColor,
+                            ),
+                            itemBuilder: (context, index) {
+                              final answer =
+                                  answers[currentQuestionIndex][index];
+                              final isSelected =
+                                  selectedAnswer[currentQuestionIndex]
+                                      .contains(index);
+
+                              return CheckboxListTile(
+                                activeColor: const Color(0xFF78FCB0),
+                                title: Text(
+                                  answer,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                controlAffinity:
+                                    ListTileControlAffinity.trailing,
+                                value: isSelected,
+                                onChanged: (value) {
+                                  final newSelectedAnswers = Set<int>.from(
+                                      selectedAnswer[currentQuestionIndex]);
+
+                                  if (value == true) {
+                                    newSelectedAnswers.add(index);
+                                  } else {
+                                    newSelectedAnswers.remove(index);
+                                  }
+
+                                  ref
+                                      .read(selectedAnswerProvider.notifier)
+                                      .state = List.from(selectedAnswer)
+                                    ..[currentQuestionIndex] =
+                                        newSelectedAnswers;
+                                },
+                              );
+                            },
                           ),
-                          itemBuilder: (context, index) {
-                            final answer = answers[currentQuestionIndex][index];
-                            final isSelected =
-                                selectedAnswer[currentQuestionIndex]
-                                    .contains(index);
-
-                            return CheckboxListTile(
-                              activeColor: const Color(0xFF78FCB0),
-                              title: Text(
-                                answer,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              controlAffinity: ListTileControlAffinity.trailing,
-                              value: isSelected,
-                              onChanged: (value) {
-                                final newSelectedAnswers = Set<int>.from(
-                                    selectedAnswer[currentQuestionIndex]);
-
-                                if (value == true) {
-                                  newSelectedAnswers.add(index);
-                                } else {
-                                  newSelectedAnswers.remove(index);
-                                }
-
-                                ref
-                                    .read(selectedAnswerProvider.notifier)
-                                    .state = List.from(selectedAnswer)
-                                  ..[currentQuestionIndex] = newSelectedAnswers;
-                              },
-                            );
-                          },
                         ),
                       ),
                     ),
@@ -123,6 +131,9 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                 ),
               ),
               buildBottomButton(isAnswerSelected, isLastQuestion, context),
+              const SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),
@@ -266,7 +277,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).size.width * 0.1),
                       child: Text(
-                        'Which technology is\nbest for your x-platform-app',
+                        'Which technology is\nbest for your x-platform-app?',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.displayLarge,
                       ),

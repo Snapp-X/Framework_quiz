@@ -39,6 +39,23 @@ ThemeData buildCustomThemeData(BuildContext context) {
       ),
     ),
     dividerColor: Colors.white.withOpacity(0.5),
+    scrollbarTheme: ScrollbarThemeData(
+      trackVisibility: MaterialStateProperty.all<bool>(false),
+      thumbVisibility: MaterialStateProperty.all<bool>(true),
+      interactive: true,
+      radius: const Radius.circular(10.0),
+      thumbColor: MaterialStateProperty.all<Color>(
+        Colors.white.withOpacity(0.5),
+      ),
+      thickness: MaterialStateProperty.all(5.0),
+      minThumbLength: 10,
+      trackColor: MaterialStateProperty.all<Color>(
+        Colors.grey.withOpacity(0.5),
+      ),
+      trackBorderColor: MaterialStateProperty.all<Color>(
+        Colors.grey.withOpacity(0.8),
+      ),
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         foregroundColor: MaterialStateProperty.resolveWith<Color>(
