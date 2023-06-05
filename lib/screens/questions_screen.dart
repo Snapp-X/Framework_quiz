@@ -64,10 +64,13 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(bottom: screenHeight * 0.03),
-                      child: Text(
-                        questions[currentQuestionIndex],
-                        style: Theme.of(context).textTheme.bodyLarge,
+                      padding: EdgeInsets.only(bottom: screenHeight * 0.02),
+                      child: SizedBox(
+                        height: screenHeight * 0.07,
+                        child: Text(
+                          questions[currentQuestionIndex],
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       ),
                     ),
                     SingleChildScrollView(
@@ -135,7 +138,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     String userAgent = html.window.navigator.userAgent;
     bool isMobileDevice = userAgent.contains('Mobile');
     return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
+      padding: const EdgeInsets.only(top: 28.0),
       child: SizedBox(
         width: isMobileDevice ? screenWidth * 0.8 : screenWidth * 0.4,
         height: screenHeight * 0.1,
