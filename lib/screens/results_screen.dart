@@ -15,7 +15,6 @@ class ResultsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaQuery = MediaQuery.of(context);
     final screenWidth = mediaQuery.size.width;
-    final screenHeight = mediaQuery.size.height;
     final results = ref.watch(resultProvider);
     final selectedAnswer = ref.watch(selectedAnswerProvider.notifier).state;
 
@@ -109,8 +108,8 @@ class ResultsScreen extends ConsumerWidget {
                             ),
                           ),
                           subtitle: Padding(
-                            padding: EdgeInsets.only(
-                                bottom: screenHeight * 0.01, left: 20),
+                            padding:
+                                const EdgeInsets.only(bottom: 20, left: 20),
                             child: Text(
                               entries[index].key,
                               style: Theme.of(context).textTheme.bodyMedium,
@@ -122,6 +121,15 @@ class ResultsScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Text(
+                    'A Project By Snapp X.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+              )
             ],
           ),
         ),

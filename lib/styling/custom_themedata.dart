@@ -25,6 +25,12 @@ ThemeData buildCustomThemeData(BuildContext context) {
         fontSize: MediaQuery.of(context).size.width * 0.013,
         color: Colors.white.withOpacity(0.5),
       ),
+      bodySmall: TextStyle(
+        fontFamily: 'Switzer',
+        fontWeight: FontWeight.w300,
+        fontSize: MediaQuery.of(context).size.width * 0.013,
+        color: Colors.white.withOpacity(0.3),
+      ),
       displayLarge: TextStyle(
         fontFamily: 'Clash Grotesk Display',
         fontWeight: FontWeight.w600,
