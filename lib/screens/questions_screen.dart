@@ -36,13 +36,13 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
     String userAgent = html.window.navigator.userAgent;
     bool isMobileDevice = userAgent.contains('Mobile');
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
-        child: Center(
+        child: Align(
+          alignment: Alignment.topCenter,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -70,52 +70,60 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: answers[currentQuestionIndex].length,
-                      separatorBuilder: (context, index) => Divider(
-                        color: Theme.of(context).dividerColor,
-                      ),
-                      itemBuilder: (context, index) {
-                        final answer = answers[currentQuestionIndex][index];
-                        final isSelected = selectedAnswer[currentQuestionIndex]
-                            .contains(index);
-
-                        return CheckboxListTile(
-                          activeColor: const Color(0xFF78FCB0),
-                          title: Text(
-                            answer,
-                            style: Theme.of(context).textTheme.bodyMedium,
+                    SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      child: SizedBox(
+                        height: isMobileDevice
+                            ? screenHeight * 0.75
+                            : screenHeight * 0.35,
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: answers[currentQuestionIndex].length,
+                          separatorBuilder: (context, index) => Divider(
+                            color: Theme.of(context).dividerColor,
                           ),
-                          controlAffinity: ListTileControlAffinity.trailing,
-                          value: isSelected,
-                          onChanged: (value) {
-                            final newSelectedAnswers = Set<int>.from(
-                                selectedAnswer[currentQuestionIndex]);
+                          itemBuilder: (context, index) {
+                            final answer = answers[currentQuestionIndex][index];
+                            final isSelected =
+                                selectedAnswer[currentQuestionIndex]
+                                    .contains(index);
 
-                            if (value == true) {
-                              newSelectedAnswers.add(index);
-                            } else {
-                              newSelectedAnswers.remove(index);
-                            }
+                            return CheckboxListTile(
+                              activeColor: const Color(0xFF78FCB0),
+                              title: Text(
+                                answer,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              controlAffinity: ListTileControlAffinity.trailing,
+                              value: isSelected,
+                              onChanged: (value) {
+                                final newSelectedAnswers = Set<int>.from(
+                                    selectedAnswer[currentQuestionIndex]);
 
-                            ref.read(selectedAnswerProvider.notifier).state =
-                                List.from(selectedAnswer)
+                                if (value == true) {
+                                  newSelectedAnswers.add(index);
+                                } else {
+                                  newSelectedAnswers.remove(index);
+                                }
+
+                                ref
+                                    .read(selectedAnswerProvider.notifier)
+                                    .state = List.from(selectedAnswer)
                                   ..[currentQuestionIndex] = newSelectedAnswers;
+                              },
+                            );
                           },
-                        );
-                      },
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
+              buildBottomButton(isAnswerSelected, isLastQuestion, context),
             ],
           ),
         ),
       ),
-      floatingActionButton:
-          buildBottomButton(isAnswerSelected, isLastQuestion, context),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -127,7 +135,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     String userAgent = html.window.navigator.userAgent;
     bool isMobileDevice = userAgent.contains('Mobile');
     return Padding(
-      padding: EdgeInsets.only(bottom: screenHeight * 0.08),
+      padding: const EdgeInsets.only(top: 20.0),
       child: SizedBox(
         width: isMobileDevice ? screenWidth * 0.8 : screenWidth * 0.4,
         height: screenHeight * 0.1,
