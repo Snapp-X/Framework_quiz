@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universal_html/html.dart' as html;
 
 import '../providers/qa_provider.dart';
 
@@ -33,6 +34,8 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
 
     final isAnswerSelected = selectedAnswer[currentQuestionIndex].isNotEmpty;
     final isLastQuestion = currentQuestionIndex == questions.length - 1;
+    String userAgent = html.window.navigator.userAgent;
+    bool isMobileDevice = userAgent.contains('Mobile');
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +52,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                     context, currentQuestionIndex, questions, ref),
               ),
               Container(
-                width: screenWidth * 0.4,
+                width: isMobileDevice ? screenWidth * 0.8 : screenWidth * 0.4,
                 padding: EdgeInsets.all(screenWidth * 0.04),
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -121,10 +124,12 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final mediaQuery = MediaQuery.of(context);
     final screenWidth = mediaQuery.size.width;
     final screenHeight = mediaQuery.size.height;
+    String userAgent = html.window.navigator.userAgent;
+    bool isMobileDevice = userAgent.contains('Mobile');
     return Padding(
       padding: EdgeInsets.only(bottom: screenHeight * 0.08),
       child: SizedBox(
-        width: screenWidth * 0.4,
+        width: isMobileDevice ? screenWidth * 0.8 : screenWidth * 0.4,
         height: screenHeight * 0.1,
         child: ElevatedButton(
           onPressed: isAnswerSelected
