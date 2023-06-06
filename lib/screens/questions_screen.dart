@@ -249,6 +249,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
 
   void showDialogOnAppStart() {
     showDialog(
+      barrierColor: const Color(0xFF141414),
       barrierDismissible: false,
       context: context,
       builder: (_) => BackdropFilter(
