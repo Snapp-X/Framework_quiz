@@ -105,7 +105,6 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                           itemCount: answers[currentQuestionIndex].length,
                           separatorBuilder: (context, index) => Divider(
                             thickness: 3,
-                            indent: 20,
                             endIndent: 20,
                             color: Theme.of(context).dividerColor,
                           ),
@@ -248,7 +247,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                 child: LinearProgressIndicator(
                   minHeight: 4,
                   value: (currentQuestionIndex + 1) / firstHalfLength,
-                  backgroundColor: const Color(0xFF36343B),
+                  backgroundColor: const Color(0xFF36343B).withOpacity(0.5),
                   valueColor:
                       const AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
                 ),
@@ -271,7 +270,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                   minHeight: 4,
                   value: (currentQuestionIndex - firstHalfLength + 1) /
                       secondHalfLength,
-                  backgroundColor: const Color(0xFF36343B),
+                  backgroundColor: const Color(0xFF36343B).withOpacity(0.5),
                   valueColor:
                       const AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
                 ),
