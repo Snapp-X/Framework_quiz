@@ -58,10 +58,13 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                 ),
                 Container(
                   width: isMobileDevice ? screenWidth * 0.8 : screenWidth * 0.4,
-                  padding: EdgeInsets.all(screenWidth * 0.04),
+                  padding: EdgeInsets.symmetric(
+                    vertical: screenWidth * 0.04,
+                    horizontal: screenWidth * 0.02,
+                  ),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.white.withOpacity(0.5),
+                      color: const Color(0xFF36343B).withOpacity(0.3),
                       width: 3.0,
                     ),
                     borderRadius: BorderRadius.circular(60),
@@ -94,6 +97,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                             endIndent: 20,
                             color: Theme.of(context).dividerColor,
                           ),
+                          padding: const EdgeInsets.only(right: 16, left: 16),
                           itemBuilder: (context, index) {
                             final answer = answers[currentQuestionIndex][index];
                             final isSelected =
