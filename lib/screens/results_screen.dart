@@ -152,6 +152,7 @@ class ResultsScreen extends ConsumerWidget {
             color: const Color(0xFF36343B).withOpacity(0.5),
           ),
           child: IconButton(
+            splashRadius: 24.0,
             onPressed: () {
               ref.read(currentQuestionIndexProvider.notifier).state = 0;
               ref.read(selectedAnswerProvider.notifier).state =

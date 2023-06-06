@@ -196,6 +196,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                 color: const Color(0xFF36343B).withOpacity(0.5),
               ),
               child: IconButton(
+                splashRadius: 24.0,
                 onPressed: () {
                   if (currentQuestionIndex > 0) {
                     ref.read(currentQuestionIndexProvider.notifier).state--;
