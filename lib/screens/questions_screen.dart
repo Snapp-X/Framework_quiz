@@ -346,6 +346,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     return AppBar(
       automaticallyImplyLeading: false,
       centerTitle: true,
+      titleSpacing: 0,
       elevation: 0,
       leading: currentQuestionIndex > 0
           ? Container(
