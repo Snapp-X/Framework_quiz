@@ -72,17 +72,28 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(bottom: screenHeight * 0.02),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: SizedBox(
-                            height: screenHeight * 0.07,
-                            child: Text(
-                              questions[currentQuestionIndex],
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                          ),
-                        ),
+                        padding: EdgeInsets.only(
+                            bottom: screenHeight * 0.02, left: 20),
+                        child: !isMobileDevice
+                            ? Align(
+                                alignment: Alignment.centerLeft,
+                                child: SizedBox(
+                                  height: screenHeight * 0.07,
+                                  child: Text(
+                                    questions[currentQuestionIndex],
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                ),
+                              )
+                            : SizedBox(
+                                height: screenHeight * 0.07,
+                                child: Text(
+                                  questions[currentQuestionIndex],
+                                  style:
+                                      Theme.of(context).textTheme.displaySmall,
+                                ),
+                              ),
                       ),
                       SizedBox(
                         height: isMobileDevice
@@ -93,6 +104,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                           shrinkWrap: true,
                           itemCount: answers[currentQuestionIndex].length,
                           separatorBuilder: (context, index) => Divider(
+                            thickness: 3,
                             indent: 20,
                             endIndent: 20,
                             color: Theme.of(context).dividerColor,
@@ -106,10 +118,19 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
 
                             return CheckboxListTile(
                               activeColor: const Color(0xFF78FCB0),
-                              title: Text(
-                                answer,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
+                              title: isMobileDevice
+                                  ? Text(
+                                      answer,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium,
+                                    )
+                                  : Text(
+                                      answer,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
                               controlAffinity: ListTileControlAffinity.trailing,
                               value: isSelected,
                               onChanged: (value) {
@@ -221,12 +242,16 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              child: LinearProgressIndicator(
-                minHeight: 4,
-                value: (currentQuestionIndex + 1) / firstHalfLength,
-                backgroundColor: const Color(0xFF36343B),
-                valueColor:
-                    const AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
+              child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.horizontal(left: Radius.circular(20)),
+                child: LinearProgressIndicator(
+                  minHeight: 4,
+                  value: (currentQuestionIndex + 1) / firstHalfLength,
+                  backgroundColor: const Color(0xFF36343B),
+                  valueColor:
+                      const AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
+                ),
               ),
             ),
             Container(
@@ -239,13 +264,17 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
               ),
             ),
             Expanded(
-              child: LinearProgressIndicator(
-                minHeight: 4,
-                value: (currentQuestionIndex - firstHalfLength + 1) /
-                    secondHalfLength,
-                backgroundColor: const Color(0xFF36343B),
-                valueColor:
-                    const AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
+              child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.horizontal(right: Radius.circular(20)),
+                child: LinearProgressIndicator(
+                  minHeight: 4,
+                  value: (currentQuestionIndex - firstHalfLength + 1) /
+                      secondHalfLength,
+                  backgroundColor: const Color(0xFF36343B),
+                  valueColor:
+                      const AlwaysStoppedAnimation<Color>(Color(0xFF78FCB0)),
+                ),
               ),
             )
           ],

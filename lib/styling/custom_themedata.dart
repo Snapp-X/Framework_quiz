@@ -31,6 +31,18 @@ ThemeData buildCustomThemeData(BuildContext context) {
         fontSize: MediaQuery.of(context).size.width * 0.013,
         color: Colors.white.withOpacity(0.3),
       ),
+      displayMedium: TextStyle(
+        fontFamily: 'Switzer',
+        fontWeight: FontWeight.w500,
+        fontSize: MediaQuery.of(context).size.width * 0.020,
+        color: Colors.white.withOpacity(0.5),
+      ),
+      displaySmall: TextStyle(
+        fontFamily: 'Switzer',
+        fontWeight: FontWeight.w500,
+        fontSize: MediaQuery.of(context).size.width * 0.020,
+        color: Colors.white,
+      ),
       displayLarge: TextStyle(
         fontFamily: 'Clash Grotesk Display',
         fontWeight: FontWeight.w600,
@@ -44,7 +56,7 @@ ThemeData buildCustomThemeData(BuildContext context) {
         color: Colors.black,
       ),
     ),
-    dividerColor: Colors.white.withOpacity(0.5),
+    dividerColor: const Color(0xFF36343B).withOpacity(0.5),
     scrollbarTheme: ScrollbarThemeData(
       trackVisibility: MaterialStateProperty.all<bool>(false),
       thumbVisibility: MaterialStateProperty.all<bool>(true),
