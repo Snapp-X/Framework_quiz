@@ -38,6 +38,161 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     String userAgent = html.window.navigator.userAgent;
     bool isMobileDevice = userAgent.contains('Mobile');
 
+    return !isMobileDevice
+        ? buildSafeAreaWeb(
+            context,
+            currentQuestionIndex,
+            questions,
+            isMobileDevice,
+            screenWidth,
+            screenHeight,
+            scrollController,
+            answers,
+            selectedAnswer,
+            isAnswerSelected,
+            isLastQuestion)
+        : buildSafeAreaMobile(
+            context,
+            currentQuestionIndex,
+            questions,
+            isMobileDevice,
+            screenWidth,
+            screenHeight,
+            scrollController,
+            answers,
+            selectedAnswer,
+            isAnswerSelected,
+            isLastQuestion);
+  }
+
+  SafeArea buildSafeAreaMobile(
+      BuildContext context,
+      int currentQuestionIndex,
+      List<String> questions,
+      bool isMobileDevice,
+      double screenWidth,
+      double screenHeight,
+      ScrollController scrollController,
+      List<List<String>> answers,
+      List<Set<int>> selectedAnswer,
+      bool isAnswerSelected,
+      bool isLastQuestion) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: buildCustomAppBar(
+            context, currentQuestionIndex, questions, ref, isMobileDevice),
+        body: SingleChildScrollView(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Container(
+                    width: screenWidth * 0.8,
+                    padding: EdgeInsets.symmetric(
+                      vertical: screenWidth * 0.04,
+                      horizontal: screenWidth * 0.02,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color(0xFF36343B).withOpacity(0.3),
+                        width: 3.0,
+                      ),
+                      borderRadius: BorderRadius.circular(60),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              bottom: screenHeight * 0.02,
+                              top: screenHeight * 0.02),
+                          child: SizedBox(
+                            height: screenHeight * 0.07,
+                            child: Text(
+                              questions[currentQuestionIndex],
+                              style: Theme.of(context).textTheme.displaySmall,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.5,
+                          child: ListView.separated(
+                            controller: scrollController,
+                            shrinkWrap: true,
+                            itemCount: answers[currentQuestionIndex].length,
+                            separatorBuilder: (context, index) => Divider(
+                              thickness: 3,
+                              endIndent: 20,
+                              color: Theme.of(context).dividerColor,
+                            ),
+                            padding: const EdgeInsets.only(right: 16, left: 16),
+                            itemBuilder: (context, index) {
+                              final answer =
+                                  answers[currentQuestionIndex][index];
+                              final isSelected =
+                                  selectedAnswer[currentQuestionIndex]
+                                      .contains(index);
+
+                              return CheckboxListTile(
+                                activeColor: const Color(0xFF78FCB0),
+                                title: Text(
+                                  answer,
+                                  style:
+                                      Theme.of(context).textTheme.displayMedium,
+                                ),
+                                controlAffinity:
+                                    ListTileControlAffinity.trailing,
+                                value: isSelected,
+                                onChanged: (value) {
+                                  final newSelectedAnswers = Set<int>.from(
+                                      selectedAnswer[currentQuestionIndex]);
+
+                                  if (value == true) {
+                                    newSelectedAnswers.add(index);
+                                  } else {
+                                    newSelectedAnswers.remove(index);
+                                  }
+
+                                  ref
+                                      .read(selectedAnswerProvider.notifier)
+                                      .state = List.from(selectedAnswer)
+                                    ..[currentQuestionIndex] =
+                                        newSelectedAnswers;
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                buildBottomButton(isAnswerSelected, isLastQuestion, context),
+                const SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  SafeArea buildSafeAreaWeb(
+      BuildContext context,
+      int currentQuestionIndex,
+      List<String> questions,
+      bool isMobileDevice,
+      double screenWidth,
+      double screenHeight,
+      ScrollController scrollController,
+      List<List<String>> answers,
+      List<Set<int>> selectedAnswer,
+      bool isAnswerSelected,
+      bool isLastQuestion) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -53,11 +208,11 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                 Padding(
                   padding:
                       const EdgeInsets.only(bottom: 20, left: 26, right: 26),
-                  child: buildCustomAppBar(
-                      context, currentQuestionIndex, questions, ref),
+                  child: buildCustomAppBar(context, currentQuestionIndex,
+                      questions, ref, isMobileDevice),
                 ),
                 Container(
-                  width: isMobileDevice ? screenWidth * 0.8 : screenWidth * 0.4,
+                  width: screenWidth * 0.4,
                   padding: EdgeInsets.symmetric(
                     vertical: screenWidth * 0.04,
                     horizontal: screenWidth * 0.02,
@@ -72,33 +227,20 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(
-                            bottom: screenHeight * 0.02, left: 20),
-                        child: !isMobileDevice
-                            ? Align(
-                                alignment: Alignment.centerLeft,
-                                child: SizedBox(
-                                  height: screenHeight * 0.07,
-                                  child: Text(
-                                    questions[currentQuestionIndex],
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge,
-                                  ),
-                                ),
-                              )
-                            : SizedBox(
-                                height: screenHeight * 0.07,
-                                child: Text(
-                                  questions[currentQuestionIndex],
-                                  style:
-                                      Theme.of(context).textTheme.displaySmall,
-                                ),
+                          padding: EdgeInsets.only(
+                              bottom: screenHeight * 0.02, left: 20),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: SizedBox(
+                              height: screenHeight * 0.07,
+                              child: Text(
+                                questions[currentQuestionIndex],
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
-                      ),
+                            ),
+                          )),
                       SizedBox(
-                        height: isMobileDevice
-                            ? screenHeight * 0.75
-                            : screenHeight * 0.35,
+                        height: screenHeight * 0.35,
                         child: ListView.separated(
                           controller: scrollController,
                           shrinkWrap: true,
@@ -117,19 +259,10 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
 
                             return CheckboxListTile(
                               activeColor: const Color(0xFF78FCB0),
-                              title: isMobileDevice
-                                  ? Text(
-                                      answer,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displayMedium,
-                                    )
-                                  : Text(
-                                      answer,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
+                              title: Text(
+                                answer,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
                               controlAffinity: ListTileControlAffinity.trailing,
                               value: isSelected,
                               onChanged: (value) {
@@ -193,7 +326,9 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
             style: TextStyle(
                 fontFamily: 'SF Pro Text',
                 fontWeight: FontWeight.w600,
-                fontSize: screenWidth * 0.013),
+                fontSize: !isMobileDevice
+                    ? screenWidth * 0.013
+                    : screenHeight * 0.020),
           ),
         ),
       ),
@@ -201,7 +336,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   }
 
   AppBar buildCustomAppBar(BuildContext context, int currentQuestionIndex,
-      List<String> questions, WidgetRef ref) {
+      List<String> questions, WidgetRef ref, bool isMobileDevice) {
     final mediaQuery = MediaQuery.of(context);
     final screenWidth = mediaQuery.size.width;
     final screenHeight = mediaQuery.size.height;
@@ -236,7 +371,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
           : null,
       title: SizedBox(
         height: screenHeight * 0.03,
-        width: screenWidth * 0.4,
+        width: !isMobileDevice ? screenWidth * 0.4 : screenWidth * 0.6,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -255,7 +390,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
             ),
             Container(
               color: const Color(0xFF141414),
-              width: screenWidth * 0.05,
+              width: !isMobileDevice ? screenWidth * 0.05 : screenWidth * 0.10,
               alignment: Alignment.center,
               child: Text(
                 '${currentQuestionIndex + 1}/${questions.length}',
@@ -284,6 +419,8 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   }
 
   void showDialogOnAppStart() {
+    String userAgent = html.window.navigator.userAgent;
+    bool isMobileDevice = userAgent.contains('Mobile');
     showDialog(
       barrierColor: const Color(0xFF141414),
       barrierDismissible: false,
@@ -327,7 +464,9 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                         },
                         child: Text(
                           'Find it out',
-                          style: Theme.of(context).textTheme.labelLarge,
+                          style: !isMobileDevice
+                              ? Theme.of(context).textTheme.labelLarge
+                              : Theme.of(context).textTheme.labelSmall,
                         ),
                       ),
                     ),
