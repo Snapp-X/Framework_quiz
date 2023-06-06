@@ -211,7 +211,7 @@ class ResultsScreen extends ConsumerWidget {
                 SizedBox(
                   width: screenWidth * 0.4,
                   height: screenHeight *
-                      0.6, // Set a specific height for the ListView
+                      0.55, // Set a specific height for the ListView
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ListView.builder(
@@ -268,9 +268,10 @@ class ResultsScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Center(
+                Align(
+                  alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
+                    padding: const EdgeInsets.only(bottom: 20.0, top: 20),
                     child: Text(
                       'A Project By Snapp X.',
                       style: Theme.of(context).textTheme.bodySmall,
