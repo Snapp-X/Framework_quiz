@@ -8,7 +8,7 @@ ThemeData buildCustomThemeData(BuildContext context) {
       titleTextStyle: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w400,
-        fontSize: MediaQuery.of(context).size.height * 0.013,
+        fontSize: MediaQuery.of(context).size.height * 0.017,
         color: Colors.white.withOpacity(0.5),
       ),
     ),

@@ -70,11 +70,14 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(bottom: screenHeight * 0.02),
-                        child: SizedBox(
-                          height: screenHeight * 0.07,
-                          child: Text(
-                            questions[currentQuestionIndex],
-                            style: Theme.of(context).textTheme.bodyLarge,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(
+                            height: screenHeight * 0.07,
+                            child: Text(
+                              questions[currentQuestionIndex],
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
                           ),
                         ),
                       ),
