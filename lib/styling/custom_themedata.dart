@@ -13,6 +13,18 @@ ThemeData buildCustomThemeData(BuildContext context) {
       ),
     ),
     textTheme: TextTheme(
+      headlineMedium: TextStyle(
+        fontFamily: 'Switzer',
+        fontWeight: FontWeight.w500,
+        fontSize: MediaQuery.of(context).size.height * 0.013,
+        color: Colors.white.withOpacity(0.5),
+      ),
+      headlineSmall: TextStyle(
+        fontFamily: 'Switzer',
+        fontWeight: FontWeight.w300,
+        fontSize: MediaQuery.of(context).size.height * 0.013,
+        color: Colors.white.withOpacity(0.3),
+      ),
       bodyLarge: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w500,
@@ -54,6 +66,12 @@ ThemeData buildCustomThemeData(BuildContext context) {
         fontWeight: FontWeight.w600,
         fontSize: MediaQuery.of(context).size.height * 0.020,
         color: Colors.black,
+      ),
+      labelMedium: TextStyle(
+        fontFamily: 'Clash Grotesk Display',
+        fontWeight: FontWeight.w600,
+        fontSize: MediaQuery.of(context).size.height * 0.05,
+        color: Colors.white,
       ),
       labelLarge: TextStyle(
         fontFamily: 'SF Pro Text',

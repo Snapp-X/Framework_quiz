@@ -39,19 +39,19 @@ class ResultsScreen extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         appBar: buildCustomAppBar(ref, selectedAnswer, context),
-        /* AppBar(
-          elevation: 0,
-          automaticallyImplyLeading: false,
-        ),*/
         body: SingleChildScrollView(
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                /* Padding(
-                  padding: const EdgeInsets.only(left: 26, right: 26),
-                  child: buildCustomAppBar(ref, selectedAnswer, context),
-                ),*/
+                Center(
+                  child: SvgPicture.asset(
+                    'assets/flutter_dash.svg',
+                    colorFilter: const ColorFilter.mode(
+                        Colors.transparent, BlendMode.srcIn),
+                    semanticsLabel: 'Flutter Icon',
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -64,25 +64,20 @@ class ResultsScreen extends ConsumerWidget {
                       child: Center(
                         child: Text(
                           'Flutter it is!',
-                          style: Theme.of(context).textTheme.displayLarge,
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ),
                     ),
-                    Expanded(
+                    const Expanded(
                       flex: 1,
-                      child: SvgPicture.asset(
-                        'assets/flutter_dash.svg',
-                        colorFilter: const ColorFilter.mode(
-                            Colors.transparent, BlendMode.srcIn),
-                        semanticsLabel: 'Flutter Icon',
-                      ),
+                      child: SizedBox(),
                     ),
                   ],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: SizedBox(
-                    width: screenWidth * 0.8,
+                    width: screenWidth * 0.9,
                     height: screenHeight * 0.4,
                     child: ListView.builder(
                       itemCount: results.length,
@@ -132,7 +127,7 @@ class ResultsScreen extends ConsumerWidget {
                                 const EdgeInsets.only(bottom: 20, left: 20),
                             child: Text(
                               entries[index].key,
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: Theme.of(context).textTheme.headlineMedium,
                             ),
                           ),
                         );
@@ -145,7 +140,7 @@ class ResultsScreen extends ConsumerWidget {
                     padding: const EdgeInsets.only(bottom: 20.0),
                     child: Text(
                       'A Project By Snapp X.',
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                 )

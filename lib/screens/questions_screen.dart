@@ -106,6 +106,8 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
+                              right: screenHeight * 0.01,
+                              left: screenHeight * 0.01,
                               bottom: screenHeight * 0.02,
                               top: screenHeight * 0.02),
                           child: SizedBox(
