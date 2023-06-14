@@ -213,23 +213,17 @@ class QuestionContainer extends StatelessWidget {
       titleSpacing: 0,
       elevation: 0,
       leading: currentQuestionIndex > 0
-          ? Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF36343B).withOpacity(0.5),
-              ),
-              child: IconButton(
-                splashRadius: 24.0,
-                onPressed: () {
-                  if (currentQuestionIndex > 0) {
-                    backPressed.call();
-                    context.go('/');
-                  }
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Color(0xFF78FCB0),
-                ),
+          ? IconButton(
+              splashRadius: 24.0,
+              onPressed: () {
+                if (currentQuestionIndex > 0) {
+                  backPressed.call();
+                  context.go('/');
+                }
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Color(0xFF78FCB0),
               ),
             )
           : null,

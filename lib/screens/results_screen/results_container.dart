@@ -249,20 +249,14 @@ class ResultsContainer extends StatelessWidget {
       backgroundColor: const Color(0xFF141414),
       automaticallyImplyLeading: false,
       actions: [
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: const Color(0xFF36343B).withOpacity(0.5),
-          ),
-          child: IconButton(
-            splashRadius: 24.0,
-            onPressed: () {
-              onClosePressed.call();
-            },
-            icon: const Icon(
-              Icons.close,
-              color: Color(0xFF78FCB0),
-            ),
+        IconButton(
+          splashRadius: 24.0,
+          onPressed: () {
+            onClosePressed.call();
+          },
+          icon: const Icon(
+            Icons.close,
+            color: Color(0xFF78FCB0),
           ),
         ),
       ],
