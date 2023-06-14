@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
-import 'package:snappx_quiz/screens/results_screen.dart';
+import 'package:snappx_quiz/screens/results_screen/results_screen.dart';
 
 class LottieTransition extends StatefulWidget {
   final Animation<double> animation;

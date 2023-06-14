@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:snappx_quiz/styling/colors.dart';
 
-ThemeData buildCustomThemeData(BuildContext context) {
+ThemeData buildCustomThemeData(BuildContext context, bool isMobileDevice) {
   return ThemeData(
-    scaffoldBackgroundColor: const Color(0xFF141414),
+    scaffoldBackgroundColor: FunnyWebAppColors.background,
     appBarTheme: AppBarTheme(
-      backgroundColor: const Color(0xFF141414),
+      backgroundColor: FunnyWebAppColors.background,
       titleTextStyle: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w400,
@@ -22,7 +23,7 @@ ThemeData buildCustomThemeData(BuildContext context) {
       headlineSmall: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w300,
-        fontSize: MediaQuery.of(context).size.height * 0.013,
+        fontSize: isMobileDevice ? 16 : 18,
         color: Colors.white.withOpacity(0.3),
       ),
       bodyLarge: TextStyle(
@@ -34,7 +35,7 @@ ThemeData buildCustomThemeData(BuildContext context) {
       bodyMedium: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w500,
-        fontSize: MediaQuery.of(context).size.width * 0.013,
+        fontSize: isMobileDevice ? 16 : 18,
         color: Colors.white.withOpacity(0.5),
       ),
       bodySmall: TextStyle(
@@ -46,37 +47,37 @@ ThemeData buildCustomThemeData(BuildContext context) {
       displayMedium: TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w500,
-        fontSize: MediaQuery.of(context).size.width * 0.030,
-        color: Colors.white.withOpacity(0.5),
+        fontSize: isMobileDevice ? 18 : 35,
+        color: Colors.white,
       ),
-      displaySmall: TextStyle(
+      displaySmall: const TextStyle(
         fontFamily: 'Switzer',
         fontWeight: FontWeight.w500,
-        fontSize: MediaQuery.of(context).size.width * 0.030,
+        fontSize: 20.0,
         color: Colors.white,
       ),
-      displayLarge: TextStyle(
+      displayLarge: const TextStyle(
         fontFamily: 'Clash Grotesk Display',
         fontWeight: FontWeight.w600,
-        fontSize: MediaQuery.of(context).size.width * 0.05,
+        fontSize: 47,
         color: Colors.white,
       ),
-      labelSmall: TextStyle(
-        fontFamily: 'SF Pro Text',
+      labelSmall: const TextStyle(
+        fontFamily: 'Clash Grotesk Display',
         fontWeight: FontWeight.w600,
-        fontSize: MediaQuery.of(context).size.height * 0.020,
+        fontSize: 12.0,
         color: Colors.black,
       ),
-      labelMedium: TextStyle(
+      labelMedium: const TextStyle(
         fontFamily: 'Clash Grotesk Display',
         fontWeight: FontWeight.w600,
-        fontSize: MediaQuery.of(context).size.height * 0.05,
+        fontSize: 14.0,
         color: Colors.white,
       ),
-      labelLarge: TextStyle(
-        fontFamily: 'SF Pro Text',
+      labelLarge: const TextStyle(
+        fontFamily: 'Clash Grotesk Display',
         fontWeight: FontWeight.w600,
-        fontSize: MediaQuery.of(context).size.width * 0.013,
+        fontSize: 18.0,
         color: Colors.black,
       ),
     ),
@@ -120,6 +121,12 @@ ThemeData buildCustomThemeData(BuildContext context) {
             }
             return const Color(0xFF78FCB0);
           },
+        ),
+        fixedSize: MaterialStateProperty.all<Size>(
+          const Size(
+            300,
+            75,
+          ),
         ),
       ),
     ),

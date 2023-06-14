@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:snappx_quiz/screens/oss_licenses_page.dart';
 
-import '../screens/questions_screen.dart';
-import '../screens/results_screen.dart';
+import '../screens/questions_screen/questions_screen.dart';
+import '../screens/results_screen/results_screen.dart';
 import '../styling/custom_transition.dart';
 
 class AppRouter {
@@ -28,6 +29,16 @@ class AppRouter {
             },
           );
         },
+      ),
+      GoRoute(
+        path: '/results_direct',
+        pageBuilder: (context, state) =>
+            const MaterialPage(child: ResultsScreen()),
+      ),
+      GoRoute(
+        path: '/licenses',
+        pageBuilder: (context, state) =>
+            const MaterialPage(child: OssLicensesPage()),
       ),
     ],
   );
