@@ -187,8 +187,10 @@ class QuestionContainer extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: FunnyWebAppConstants.l,
+              SizedBox(
+                height: isMobileDevice
+                    ? FunnyWebAppConstants.xxxl
+                    : FunnyWebAppConstants.l,
               )
             ],
           ),
@@ -212,7 +214,6 @@ class QuestionContainer extends StatelessWidget {
       elevation: 0,
       leading: currentQuestionIndex > 0
           ? Container(
-              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: const Color(0xFF36343B).withOpacity(0.5),

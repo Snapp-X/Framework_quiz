@@ -250,7 +250,6 @@ class ResultsContainer extends StatelessWidget {
       automaticallyImplyLeading: false,
       actions: [
         Container(
-          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: const Color(0xFF36343B).withOpacity(0.5),

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:snappx_quiz/providers/qa_provider.dart';
 import 'package:snappx_quiz/providers/results_provider.dart';
-import 'package:snappx_quiz/screens/results_screen/reults_container.dart';
+import 'package:snappx_quiz/screens/results_screen/results_container.dart';
 import 'package:universal_html/html.dart' as html;
 
 class ResultsScreen extends ConsumerWidget {
