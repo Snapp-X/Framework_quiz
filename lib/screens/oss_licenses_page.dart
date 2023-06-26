@@ -54,6 +54,8 @@ class OssLicensesPage extends StatelessWidget {
           ),
           child: Scaffold(
               appBar: AppBar(
+                centerTitle: true,
+                elevation: 0,
                 title: const Text('Open Source Licenses'),
                 leading: Container(
                   padding: const EdgeInsets.all(8),
